@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { api } from "@/lib/api-client";
 import { cn } from "@/lib/utils";
-import { getDictionary } from "@/lib/i18n";
+import { getDictionary, type Dictionary } from "@/lib/i18n";
 import { isValidLocale, DEFAULT_LOCALE } from "@/lib/i18n-config";
 import {
   CheckCircle2,
@@ -117,7 +117,7 @@ const EntryRow = ({ name, entry }: EntryRowProps) => {
   );
 };
 
-type DiagnosticsDict = Awaited<ReturnType<typeof getDictionary<"common">>>["diagnostics"];
+type DiagnosticsDict = Dictionary<"common">["diagnostics"];
 
 type ConnectionErrorPanelProps = {
   title: string;

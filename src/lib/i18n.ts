@@ -15,10 +15,14 @@ const dictionaries = {
 
 export type DictionaryNamespace = keyof typeof dictionaries;
 
+export type Dictionary<N extends DictionaryNamespace> = Awaited<
+  ReturnType<(typeof dictionaries)[N]['pt-BR']>
+>['default'];
+
 export const getDictionary = async <N extends DictionaryNamespace>(
   namespace: N,
   locale: Locale,
-) => {
+): Promise<Dictionary<N>> => {
   const mod = await dictionaries[namespace][locale]();
-  return mod.default;
+  return mod.default as Dictionary<N>;
 };
