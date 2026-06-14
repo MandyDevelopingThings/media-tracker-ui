@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { LOCALE_COOKIE } from "@/lib/i18n-config";
 import type { ApiResponse } from "@/types/http/api-response";
 import type { ProblemDetails } from "@/types/http/problem-details";
 
@@ -15,7 +16,7 @@ if (!API_BASE_URL) {
   // Falha rápida em desenvolvimento: evita erros silenciosos de rede.
   console.error(
     "[api-client] ⚠️  A variável de ambiente API_BASE_URL não está definida. " +
-      "Verifique o arquivo .env.local na raiz do projeto.",
+    "Verifique o arquivo .env.local na raiz do projeto.",
   );
 }
 
@@ -23,17 +24,25 @@ if (!API_BASE_URL) {
 // Helpers internos
 // ---------------------------------------------------------------------------
 
-/**
- * Monta o header `Cookie` a partir dos cookies da requisição atual do Next.js.
- * Usado exclusivamente em Server Components e Server Actions para propagar
- * a sessão do ASP.NET Core Identity de forma transparente.
- */
-const buildCookieHeader = async (): Promise<string> => {
+const buildHeaders = async (): Promise<Record<string, string>> => {
   const cookieStore = await cookies();
-  return cookieStore
-    .getAll()
-    .map((c) => `${c.name}=${c.value}`)
-    .join("; ");
+  const allCookies = cookieStore.getAll();
+  const cookieHeader = allCookies.map((c) => `${c.name}=${c.value}`).join("; ");
+  const locale = cookieStore.get(LOCALE_COOKIE)?.value;
+
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
+
+  if (cookieHeader) {
+    headers["Cookie"] = cookieHeader;
+  }
+
+  if (locale) {
+    headers["Accept-Language"] = locale;
+  }
+
+  return headers;
 };
 
 /**
@@ -121,15 +130,12 @@ export const api = {
     const timeoutId = setTimeout(() => controller.abort(), TIMEOUT_MS);
 
     try {
-      const cookieHeader = await buildCookieHeader();
+      const headers = await buildHeaders();
 
       const response = await fetch(`${API_BASE_URL}${path}`, {
         method: "GET",
         signal: controller.signal,
-        headers: {
-          "Content-Type": "application/json",
-          Cookie: cookieHeader,
-        },
+        headers,
         // Integração com o sistema de cache do Next.js 16:
         // `next.tags` habilita a revalidação sob demanda via `revalidateTag()`.
         next: tags ? { tags } : undefined,
@@ -163,15 +169,12 @@ export const api = {
     const timeoutId = setTimeout(() => controller.abort(), TIMEOUT_MS);
 
     try {
-      const cookieHeader = await buildCookieHeader();
+      const headers = await buildHeaders();
 
       const response = await fetch(`${API_BASE_URL}${path}`, {
         method,
         signal: controller.signal,
-        headers: {
-          "Content-Type": "application/json",
-          Cookie: cookieHeader,
-        },
+        headers,
         body: body !== undefined ? JSON.stringify(body) : undefined,
         // Comandos nunca devem ser cacheados.
         cache: "no-store",
@@ -191,34 +194,25 @@ export const api = {
 // ---------------------------------------------------------------------------
 
 const parseResponse = async <T>(response: Response): Promise<ApiResponse<T>> => {
-  // Sucesso sem corpo (ex: 204 No Content em DELETE).
   if (response.status === 204) {
     return { success: true, data: undefined as T, status: 204 };
   }
 
   if (response.ok) {
-    // Lê o body como texto primeiro — o body stream só pode ser consumido uma vez.
-    // Isso permite lidar com respostas plain-text (ex: "Healthy") sem perder o dado.
     const text = await response.text();
 
     if (!text.trim()) {
-      // Corpo vazio em resposta 2xx — tratamos como sucesso sem dados.
       return { success: true, data: undefined as T, status: response.status };
     }
 
     try {
-      // Tenta parsear como JSON. Se o servidor responder com plain text
-      // (ex: Healthy sem aspas), JSON.parse lança SyntaxError.
       const data = JSON.parse(text) as T;
       return { success: true, data, status: response.status };
     } catch {
-      // Resposta 2xx com corpo plain-text (não-JSON): retorna o texto puro.
-      // O consumidor (ex: page.tsx) é responsável por tipar e interpretar.
       return { success: true, data: text as T, status: response.status };
     }
   }
 
-  // Resposta de erro (4xx / 5xx) → parseia o ProblemDetails.
   const error = await parseProblemDetails(response);
   return { success: false, error, status: response.status };
 };
