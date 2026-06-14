@@ -3,6 +3,8 @@ import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { THEME_STORAGE_KEY } from "@/lib/theme";
+import { cookies } from "next/headers";
+import { isValidLocale, DEFAULT_LOCALE } from "@/lib/i18n-config";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -39,14 +41,18 @@ const themeInitScript = `
 })();
 `.trim();
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+  const rawLocale = cookieStore.get("NEXT_LOCALE")?.value;
+  const locale = isValidLocale(rawLocale) ? rawLocale : DEFAULT_LOCALE;
+
   return (
     <html
-      lang="pt-BR"
+      lang={locale}
       className={cn(
         "h-full antialiased",
         geistSans.variable,
@@ -63,3 +69,4 @@ export default function RootLayout({
     </html>
   );
 }
+

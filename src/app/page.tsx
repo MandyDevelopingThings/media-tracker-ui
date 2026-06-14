@@ -1,5 +1,10 @@
+import { cookies } from "next/headers";
 import { api } from "@/lib/api-client";
 import { cn } from "@/lib/utils";
+import { getDictionary } from "@/lib/i18n";
+import { isValidLocale, DEFAULT_LOCALE } from "@/lib/i18n-config";
+import { LanguageSwitcher } from "@/components/language-switcher";
+import { ThemeToggle } from "@/components/theme-toggle";
 import {
   CheckCircle2,
   XCircle,
@@ -9,7 +14,6 @@ import {
   Clock,
   Server,
 } from "lucide-react";
-import { ThemeToggle } from "@/components/theme-toggle";
 
 type HealthStatus = "Healthy" | "Degraded" | "Unhealthy";
 
@@ -22,10 +26,10 @@ type HealthEntry = Readonly<{
 type HealthApiPayload =
   | HealthStatus
   | Readonly<{
-    status: HealthStatus;
-    totalDuration?: string;
-    entries?: Readonly<Record<string, HealthEntry>>;
-  }>;
+      status: HealthStatus;
+      totalDuration?: string;
+      entries?: Readonly<Record<string, HealthEntry>>;
+    }>;
 
 type NormalizedHealth = Readonly<{
   status: HealthStatus;
@@ -116,16 +120,20 @@ const EntryRow = ({ name, entry }: EntryRowProps) => {
   );
 };
 
+type DiagnosticsDict = Awaited<ReturnType<typeof getDictionary<"common">>>["diagnostics"];
+
 type ConnectionErrorPanelProps = {
   title: string;
   detail?: string;
   status: number;
+  dict: DiagnosticsDict;
 };
 
 const ConnectionErrorPanel = ({
   title,
   detail,
   status,
+  dict,
 }: ConnectionErrorPanelProps) => (
   <div className="rounded-2xl border border-red-500/20 bg-red-500/5 p-6 backdrop-blur-sm shadow-sm">
     <div className="flex items-start gap-4">
@@ -135,7 +143,7 @@ const ConnectionErrorPanel = ({
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-3 mb-1">
           <h2 className="text-base font-semibold text-red-700 dark:text-red-300">
-            Falha na Conexão
+            {dict.error.heading}
           </h2>
           {status > 0 && (
             <span className="rounded-md bg-red-500/10 px-2 py-0.5 font-mono text-xs text-red-600 dark:text-red-400 border border-red-500/20">
@@ -149,7 +157,7 @@ const ConnectionErrorPanel = ({
         )}
         <div className="mt-4 rounded-lg bg-muted/50 px-4 py-3 border border-border">
           <p className="text-xs text-muted-foreground font-mono">
-            Verifique se a API C# está rodando em{" "}
+            {dict.error.hint}{" "}
             <span className="text-amber-600 dark:text-amber-400">
               {process.env.API_BASE_URL ?? "API_BASE_URL não definida"}
             </span>
@@ -162,10 +170,13 @@ const ConnectionErrorPanel = ({
 
 type SuccessPanelProps = {
   data: NormalizedHealth;
+  dict: DiagnosticsDict;
 };
 
-const SuccessPanel = ({ data }: SuccessPanelProps) => {
+const SuccessPanel = ({ data, dict }: SuccessPanelProps) => {
   const entryCount = Object.keys(data.entries).length;
+  const serviceLabel =
+    entryCount === 1 ? dict.connected.serviceCountOne : dict.connected.serviceCountMany;
 
   return (
     <div className="space-y-4">
@@ -177,12 +188,12 @@ const SuccessPanel = ({ data }: SuccessPanelProps) => {
             </div>
             <div>
               <h2 className="text-base font-semibold text-emerald-700 dark:text-emerald-300">
-                API Conectada
+                {dict.connected.heading}
               </h2>
               <p className="text-xs text-muted-foreground mt-0.5">
                 {entryCount === 0
-                  ? "Nenhum serviço detalhado"
-                  : `${entryCount} ${entryCount === 1 ? "serviço monitorado" : "serviços monitorados"}`}
+                  ? dict.connected.noServices
+                  : `${entryCount} ${serviceLabel}`}
               </p>
             </div>
           </div>
@@ -191,7 +202,9 @@ const SuccessPanel = ({ data }: SuccessPanelProps) => {
         {data.totalDuration && (
           <div className="mt-4 flex items-center gap-2 text-xs text-muted-foreground">
             <Clock className="h-3.5 w-3.5" />
-            <span className="font-mono">Duração total: {data.totalDuration}</span>
+            <span className="font-mono">
+              {dict.connected.duration} {data.totalDuration}
+            </span>
           </div>
         )}
       </div>
@@ -199,7 +212,7 @@ const SuccessPanel = ({ data }: SuccessPanelProps) => {
       {entryCount > 0 && (
         <div className="rounded-2xl border border-border bg-card p-6 backdrop-blur-sm shadow-sm">
           <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-4">
-            Serviços
+            {dict.services.heading}
           </h3>
           <div className="space-y-0">
             {Object.entries(data.entries).map(([name, entry]) => (
@@ -213,9 +226,16 @@ const SuccessPanel = ({ data }: SuccessPanelProps) => {
 };
 
 export default async function DiagnosticsPage() {
-  const result = await api.query<HealthApiPayload>("/health", {
-    cache: "no-store",
-  });
+  const cookieStore = await cookies();
+  const rawLocale = cookieStore.get("NEXT_LOCALE")?.value;
+  const locale = isValidLocale(rawLocale) ? rawLocale : DEFAULT_LOCALE;
+
+  const [result, dict] = await Promise.all([
+    api.query<HealthApiPayload>("/health", { cache: "no-store" }),
+    getDictionary("common", locale),
+  ]);
+
+  const { diagnostics } = dict;
 
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
@@ -239,19 +259,20 @@ export default async function DiagnosticsPage() {
                 MediaTracker
               </span>
             </div>
-            <ThemeToggle />
+            <div className="flex items-center gap-2">
+              <LanguageSwitcher currentLocale={locale} />
+              <ThemeToggle />
+            </div>
           </div>
 
           <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            Diagnóstico de{" "}
+            {diagnostics.title}{" "}
             <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-              Infraestrutura
+              {diagnostics.titleHighlight}
             </span>
           </h1>
           <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
-            Este painel verifica a conectividade entre o servidor Next.js e a
-            API C# em tempo real, diretamente no servidor — sem passar pelo
-            browser.
+            {diagnostics.description}
           </p>
         </header>
 
@@ -267,18 +288,19 @@ export default async function DiagnosticsPage() {
         </div>
 
         {result.success ? (
-          <SuccessPanel data={normalizeHealth(result.data)} />
+          <SuccessPanel data={normalizeHealth(result.data)} dict={diagnostics} />
         ) : (
           <ConnectionErrorPanel
             title={result.error.title}
             detail={result.error.detail}
             status={result.status}
+            dict={diagnostics}
           />
         )}
 
         <footer className="mt-10 text-center text-xs text-muted-foreground">
-          Renderizado no servidor em{" "}
-          {new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })}
+          {diagnostics.footer}{" "}
+          {new Date().toLocaleString(locale, { timeZone: "America/Sao_Paulo" })}
         </footer>
       </div>
     </div>

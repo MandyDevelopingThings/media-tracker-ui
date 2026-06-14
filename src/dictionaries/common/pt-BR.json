@@ -1,0 +1,37 @@
+{
+  "actions": {
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "confirm": "Confirmar"
+  },
+  "errors": {
+    "generic": "Algo deu errado. Tente novamente.",
+    "network": "Falha na conexão com o servidor."
+  },
+  "nav": {
+    "library": "Biblioteca",
+    "journal": "Diário",
+    "settings": "Configurações"
+  },
+  "diagnostics": {
+    "title": "Diagnóstico de",
+    "titleHighlight": "Infraestrutura",
+    "description": "Este painel verifica a conectividade entre o servidor Next.js e a API C# em tempo real, diretamente no servidor — sem passar pelo browser.",
+    "footer": "Renderizado no servidor em",
+    "connected": {
+      "heading": "API Conectada",
+      "noServices": "Nenhum serviço detalhado",
+      "serviceCountOne": "serviço monitorado",
+      "serviceCountMany": "serviços monitorados",
+      "duration": "Duração total:"
+    },
+    "error": {
+      "heading": "Falha na Conexão",
+      "hint": "Verifique se a API C# está rodando em"
+    },
+    "services": {
+      "heading": "Serviços"
+    }
+  }
+}
