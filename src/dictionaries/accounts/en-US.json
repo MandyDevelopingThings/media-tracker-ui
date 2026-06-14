@@ -1,0 +1,53 @@
+{
+  "login": {
+    "pageTitle": "Login | MediaTracker",
+    "title": "Welcome back",
+    "subtitle": "Sign in to your account to continue",
+    "usernameLabel": "Username",
+    "usernamePlaceholder": "e.g. john_doe",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "••••••••",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password?",
+    "submitButton": "Sign In",
+    "noAccount": "Don't have an account?",
+    "registerLink": "Sign up"
+  },
+  "register": {
+    "pageTitle": "Register | MediaTracker",
+    "title": "Create account",
+    "subtitle": "Join MediaTracker today",
+    "emailLabel": "Email",
+    "emailPlaceholder": "e.g. yourname@email.com",
+    "usernameLabel": "Username",
+    "usernamePlaceholder": "e.g. john_doe",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "••••••••",
+    "confirmPasswordLabel": "Confirm password",
+    "confirmPasswordPlaceholder": "••••••••",
+    "submitButton": "Create account",
+    "hasAccount": "Already have an account?",
+    "loginLink": "Sign in"
+  },
+  "forgotPassword": {
+    "pageTitle": "Recover password | MediaTracker",
+    "title": "Recover password",
+    "subtitle": "We will send a reset link to your email",
+    "emailLabel": "Email",
+    "emailPlaceholder": "e.g. yourname@email.com",
+    "submitButton": "Send link",
+    "backToLogin": "Back to login",
+    "successTitle": "Check your email",
+    "successMessage": "If an account with that address exists, you will receive an email with the reset link shortly."
+  },
+  "registerSuccess": {
+    "title": "Almost there!",
+    "message": "We have sent a confirmation email to the provided address. Please check your inbox to activate your account.",
+    "backToLogin": "Back to login"
+  },
+  "errors": {
+    "invalidCredentials": "Invalid username or password.",
+    "passwordMismatch": "Passwords do not match.",
+    "generic": "Something went wrong. Please try again."
+  }
+}

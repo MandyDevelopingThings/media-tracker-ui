@@ -1,0 +1,53 @@
+{
+  "login": {
+    "pageTitle": "Entrar | MediaTracker",
+    "title": "Bem-vindo de volta",
+    "subtitle": "Entre na sua conta para continuar",
+    "usernameLabel": "Nome de usuário",
+    "usernamePlaceholder": "ex: john_doe",
+    "passwordLabel": "Senha",
+    "passwordPlaceholder": "••••••••",
+    "rememberMe": "Lembrar de mim",
+    "forgotPassword": "Esqueci minha senha",
+    "submitButton": "Entrar",
+    "noAccount": "Não tem uma conta?",
+    "registerLink": "Cadastre-se"
+  },
+  "register": {
+    "pageTitle": "Cadastro | MediaTracker",
+    "title": "Criar conta",
+    "subtitle": "Junte-se ao MediaTracker hoje",
+    "emailLabel": "E-mail",
+    "emailPlaceholder": "ex: seunome@email.com",
+    "usernameLabel": "Nome de usuário",
+    "usernamePlaceholder": "ex: john_doe",
+    "passwordLabel": "Senha",
+    "passwordPlaceholder": "••••••••",
+    "confirmPasswordLabel": "Confirmar senha",
+    "confirmPasswordPlaceholder": "••••••••",
+    "submitButton": "Criar conta",
+    "hasAccount": "Já tem uma conta?",
+    "loginLink": "Entrar"
+  },
+  "forgotPassword": {
+    "pageTitle": "Recuperar senha | MediaTracker",
+    "title": "Recuperar senha",
+    "subtitle": "Enviaremos um link de redefinição para o seu e-mail",
+    "emailLabel": "E-mail",
+    "emailPlaceholder": "ex: seunome@email.com",
+    "submitButton": "Enviar link",
+    "backToLogin": "Voltar para o login",
+    "successTitle": "Verifique seu e-mail",
+    "successMessage": "Se uma conta com esse endereço existir, você receberá um e-mail com o link de redefinição em breve."
+  },
+  "registerSuccess": {
+    "title": "Quase lá!",
+    "message": "Enviamos um e-mail de confirmação para o endereço informado. Verifique sua caixa de entrada para ativar sua conta.",
+    "backToLogin": "Voltar para o login"
+  },
+  "errors": {
+    "invalidCredentials": "Usuário ou senha inválidos.",
+    "passwordMismatch": "As senhas não coincidem.",
+    "generic": "Algo deu errado. Tente novamente."
+  }
+}
