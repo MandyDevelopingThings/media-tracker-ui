@@ -3,12 +3,9 @@ import { api } from "@/lib/api-client";
 import { cn } from "@/lib/utils";
 import { getDictionary } from "@/lib/i18n";
 import { isValidLocale, DEFAULT_LOCALE } from "@/lib/i18n-config";
-import { LanguageSwitcher } from "@/components/language-switcher";
-import { ThemeToggle } from "@/components/theme-toggle";
 import {
   CheckCircle2,
   XCircle,
-  Activity,
   Wifi,
   WifiOff,
   Clock,
@@ -250,21 +247,6 @@ export default async function DiagnosticsPage() {
 
       <div className="relative mx-auto max-w-2xl px-4 py-16 sm:px-6 lg:px-8">
         <header className="mb-10">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-3">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 border border-primary/20">
-                <Activity className="h-5 w-5 text-primary" />
-              </div>
-              <span className="text-sm font-medium text-muted-foreground tracking-wide uppercase">
-                MediaTracker
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <LanguageSwitcher currentLocale={locale} />
-              <ThemeToggle />
-            </div>
-          </div>
-
           <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
             {diagnostics.title}{" "}
             <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">

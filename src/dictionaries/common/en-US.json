@@ -12,7 +12,14 @@
   "nav": {
     "library": "Library",
     "journal": "Journal",
-    "settings": "Settings"
+    "settings": "Settings",
+    "searchPlaceholder": "Search movies, series, anime...",
+    "login": "Log in",
+    "register": "Sign up",
+    "myProfile": "My Profile",
+    "logout": "Log out",
+    "openMenu": "Open menu",
+    "openSearch": "Search"
   },
   "diagnostics": {
     "title": "Infrastructure",

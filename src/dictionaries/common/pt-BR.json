@@ -12,7 +12,14 @@
   "nav": {
     "library": "Biblioteca",
     "journal": "Diário",
-    "settings": "Configurações"
+    "settings": "Configurações",
+    "searchPlaceholder": "Buscar filmes, séries, animes...",
+    "login": "Entrar",
+    "register": "Cadastrar",
+    "myProfile": "Meu Perfil",
+    "logout": "Sair",
+    "openMenu": "Abrir menu",
+    "openSearch": "Buscar"
   },
   "diagnostics": {
     "title": "Diagnóstico de",

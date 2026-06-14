@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { THEME_STORAGE_KEY } from "@/lib/theme";
 import { cookies } from "next/headers";
 import { isValidLocale, DEFAULT_LOCALE } from "@/lib/i18n-config";
+import { Navbar } from "@/components/navbar/navbar";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -65,7 +66,10 @@ export default async function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <Navbar />
+        <main className="flex flex-1 flex-col">{children}</main>
+      </body>
     </html>
   );
 }
