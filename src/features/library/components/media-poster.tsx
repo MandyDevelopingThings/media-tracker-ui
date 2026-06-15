@@ -44,6 +44,7 @@ export const MediaPoster = ({
       fill
       sizes={sizes}
       priority={priority}
+      unoptimized
       className={cn('object-cover', className)}
     />
   );

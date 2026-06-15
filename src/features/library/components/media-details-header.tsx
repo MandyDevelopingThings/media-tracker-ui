@@ -65,6 +65,7 @@ const PosterCard = ({
         fill
         sizes="(max-width: 768px) 40vw, 220px"
         priority
+        unoptimized
         className="object-cover"
       />
     ) : (

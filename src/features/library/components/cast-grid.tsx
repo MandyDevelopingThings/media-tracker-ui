@@ -19,6 +19,7 @@ const CastAvatar = ({ member }: { member: CastMemberDto }) => (
           alt={member.name}
           fill
           sizes="56px"
+          unoptimized
           className="object-cover"
         />
       ) : (

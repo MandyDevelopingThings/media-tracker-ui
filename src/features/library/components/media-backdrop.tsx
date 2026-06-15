@@ -29,6 +29,7 @@ export const MediaBackdrop = ({ backdropPath, title, className }: MediaBackdropP
       fill
       sizes="100vw"
       priority
+      unoptimized
       className={cn('object-cover', className)}
     />
   );
