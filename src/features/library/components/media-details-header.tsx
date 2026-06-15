@@ -76,6 +76,29 @@ const PosterCard = ({
   </div>
 );
 
+const SectionCard = ({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => (
+  <div
+    className={cn(
+      'rounded-xl border border-border/40 bg-card p-5 shadow-sm',
+      className,
+    )}
+  >
+    {children}
+  </div>
+);
+
+const SectionHeading = ({ children }: { children: React.ReactNode }) => (
+  <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-4">
+    {children}
+  </h2>
+);
+
 export const MediaDetailsHeader = ({
   media,
   isAuthenticated,
@@ -93,13 +116,12 @@ export const MediaDetailsHeader = ({
   const isMovie = media.type === 'movie';
 
   return (
-    <article className="flex flex-col gap-0">
-      {/* Header Card — backdrop blurred + poster medium */}
+    <article className="flex flex-col gap-6">
+      {/* ── Header Card — backdrop blurred + poster medium ── */}
       <div
         className={cn(
           'relative w-full overflow-hidden rounded-2xl',
-          'border border-border/40',
-          'bg-card',
+          'border border-border/40 bg-card',
         )}
         style={{ minHeight: '280px' }}
       >
@@ -189,66 +211,61 @@ export const MediaDetailsHeader = ({
         </div>
       </div>
 
-      {/* Body — two column layout */}
-      <div className="grid grid-cols-1 gap-6 mt-6 lg:grid-cols-2">
+      {/* ── Body — two column layout ── */}
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Left column */}
         <div className="flex flex-col gap-6">
           {isMovie ? (
             /* Movie: cast on the left */
-            <CastGrid cast={media.topCast} label={dict.cast} />
+            <SectionCard>
+              <SectionHeading>{dict.cast}</SectionHeading>
+              <CastGrid cast={media.topCast} label={dict.cast} />
+            </SectionCard>
           ) : (
-            /* TV: overview on the left */
-            <section aria-labelledby="overview-heading">
-              <h2
-                id="overview-heading"
-                className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3"
-              >
-                {dict.overview}
-              </h2>
-              <p className="text-sm text-foreground/80 leading-relaxed">
-                {media.overview || dict.noOverview}
-              </p>
-            </section>
-          )}
+            <>
+              {/* TV: overview card */}
+              <SectionCard>
+                <SectionHeading>{dict.overview}</SectionHeading>
+                <p className="text-sm text-foreground/80 leading-relaxed">
+                  {media.overview || dict.noOverview}
+                </p>
+              </SectionCard>
 
-          {/* TV: cast below overview */}
-          {!isMovie && (
-            <CastGrid cast={media.topCast} label={dict.cast} />
+              {/* TV: cast card below overview */}
+              {media.topCast.length > 0 && (
+                <SectionCard>
+                  <SectionHeading>{dict.cast}</SectionHeading>
+                  <CastGrid cast={media.topCast} label={dict.cast} />
+                </SectionCard>
+              )}
+            </>
           )}
         </div>
 
         {/* Right column */}
         <div className="flex flex-col gap-6">
           {isMovie ? (
-            /* Movie: overview on the right */
-            <section aria-labelledby="overview-heading-movie">
-              <h2
-                id="overview-heading-movie"
-                className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3"
-              >
-                {dict.overview}
-              </h2>
+            /* Movie: overview card on the right */
+            <SectionCard>
+              <SectionHeading>{dict.overview}</SectionHeading>
               <p className="text-sm text-foreground/80 leading-relaxed">
                 {media.overview || dict.noOverview}
               </p>
-            </section>
+            </SectionCard>
           ) : (
-            /* TV: season tabs + episodes on the right */
+            /* TV: seasons & episodes card */
             media.seasons && media.seasons.length > 0 && (
-              <section aria-labelledby="seasons-heading">
-                <h2
-                  id="seasons-heading"
-                  className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-4"
-                >
-                  {dict.seasons} & {dict.episodes}
-                </h2>
+              <SectionCard>
+                <SectionHeading>
+                  {dict.seasons} &amp; {dict.episodes}
+                </SectionHeading>
                 <SeasonTabs
                   tmdbId={media.tmdbId}
                   seasons={media.seasons}
                   isAuthenticated={isAuthenticated}
                   dict={dict}
                 />
-              </section>
+              </SectionCard>
             )
           )}
         </div>

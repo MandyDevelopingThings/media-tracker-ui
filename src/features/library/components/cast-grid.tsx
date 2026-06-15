@@ -46,9 +46,6 @@ export const CastGrid = ({ cast, label }: CastGridProps) => {
 
   return (
     <section aria-label={label}>
-      <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-4">
-        {label}
-      </h2>
       <div className="grid grid-cols-4 gap-x-3 gap-y-4">
         {cast.slice(0, 8).map((member) => (
           <CastAvatar key={member.id} member={member} />

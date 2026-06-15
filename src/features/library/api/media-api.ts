@@ -1,5 +1,5 @@
 import { api } from '@/lib/api-client';
-import type { MediaSearchResult, MediaSearchParams, MediaDetailsDto, SeasonDto } from '../types';
+import type { MediaSearchResult, MediaSearchParams, MediaDetailsDto, EpisodeDto } from '../types';
 
 export const searchMedia = async (params: MediaSearchParams) => {
   const qs = new URLSearchParams();
@@ -24,6 +24,6 @@ export const getTvDetails = async (tmdbId: number) =>
   });
 
 export const getSeasonDetails = async (tmdbId: number, seasonNumber: number) =>
-  api.query<SeasonDto>(`/api/Media/tv/${tmdbId}/season/${seasonNumber}`, {
+  api.query<readonly EpisodeDto[]>(`/api/Media/tv/${tmdbId}/season/${seasonNumber}`, {
     tags: [`season-${tmdbId}-${seasonNumber}`],
   });

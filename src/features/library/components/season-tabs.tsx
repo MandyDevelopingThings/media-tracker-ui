@@ -69,7 +69,7 @@ export const SeasonTabs = ({
 
       setEpisodesMap((prev) => ({
         ...prev,
-        [seasonNumber]: result.data.episodes,
+        [seasonNumber]: result.data,
       }));
     });
   };
@@ -80,13 +80,12 @@ export const SeasonTabs = ({
   );
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-3">
+      {/* Season pills */}
       <div
         role="tablist"
         aria-label={dict.seasons}
-        className={cn(
-          'flex flex-wrap gap-2',
-        )}
+        className="flex flex-wrap gap-2"
       >
         {orderedSeasons.map((season) => {
           const isActive = season.seasonNumber === activeSeason;
@@ -117,6 +116,7 @@ export const SeasonTabs = ({
         })}
       </div>
 
+      {/* Episode list panel */}
       <div
         role="tabpanel"
         id={`season-panel-${activeSeason}`}
@@ -134,7 +134,7 @@ export const SeasonTabs = ({
             {activeSeasonMeta?.name ?? ''} — {dict.episodes}: 0
           </p>
         ) : (
-          <div className="flex flex-col gap-0.5">
+          <div className="flex flex-col gap-0.5 max-h-[420px] overflow-y-auto pr-1 scrollbar-thin">
             {currentEpisodes.map((episode) => (
               <EpisodeRow
                 key={episode.episodeNumber}
