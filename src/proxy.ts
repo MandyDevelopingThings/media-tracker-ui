@@ -25,21 +25,38 @@ const resolveLocaleFromHeader = (header: string | null): Locale => {
 export const proxy = (request: NextRequest): NextResponse => {
   const cookieLocale = request.cookies.get(LOCALE_COOKIE)?.value;
 
+  let response: NextResponse;
+
   if (isValidLocale(cookieLocale)) {
-    return NextResponse.next();
+    response = NextResponse.next({
+      request: {
+        headers: request.headers,
+      },
+    });
+  } else {
+    const resolved = resolveLocaleFromHeader(
+      request.headers.get('Accept-Language'),
+    );
+
+    const requestHeaders = new Headers(request.headers);
+    const existingCookies = requestHeaders.get('Cookie') || '';
+    requestHeaders.set('Cookie', existingCookies ? `${existingCookies}; ${LOCALE_COOKIE}=${resolved}` : `${LOCALE_COOKIE}=${resolved}`);
+
+    response = NextResponse.next({
+      request: {
+        headers: requestHeaders,
+      },
+    });
+
+    response.cookies.set(LOCALE_COOKIE, resolved, {
+      path: '/',
+      sameSite: 'lax',
+      httpOnly: false,
+      maxAge: ONE_YEAR_SECONDS,
+    });
   }
 
-  const resolved = resolveLocaleFromHeader(
-    request.headers.get('Accept-Language'),
-  );
-
-  const response = NextResponse.next();
-  response.cookies.set(LOCALE_COOKIE, resolved, {
-    path: '/',
-    sameSite: 'lax',
-    httpOnly: false,
-    maxAge: ONE_YEAR_SECONDS,
-  });
+  response.headers.set('Vary', 'RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Url');
 
   return response;
 };
