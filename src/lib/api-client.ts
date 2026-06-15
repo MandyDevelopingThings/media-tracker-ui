@@ -45,6 +45,50 @@ const buildHeaders = async (): Promise<Record<string, string>> => {
   return headers;
 };
 
+const forwardCookies = async (response: Response): Promise<void> => {
+  const setCookies = response.headers.getSetCookie();
+  if (setCookies.length === 0) return;
+
+  const cookieStore = await cookies();
+
+  for (const cookieStr of setCookies) {
+    const parts = cookieStr.split(';').map(p => p.trim());
+    const [nameValue, ...optionsParts] = parts;
+    const splitIndex = nameValue.indexOf('=');
+    if (splitIndex === -1) continue;
+
+    const name = nameValue.substring(0, splitIndex);
+    const value = nameValue.substring(splitIndex + 1);
+
+    const options: any = {};
+
+    for (const opt of optionsParts) {
+      const [optName, ...optValParts] = opt.split('=');
+      const optVal = optValParts.join('=');
+      const key = optName.toLowerCase();
+
+      if (key === 'expires') options.expires = new Date(optVal);
+      if (key === 'max-age') options.maxAge = parseInt(optVal, 10);
+      if (key === 'domain') options.domain = optVal;
+      if (key === 'path') options.path = optVal || '/';
+      if (key === 'secure') options.secure = true;
+      if (key === 'httponly') options.httpOnly = true;
+      if (key === 'samesite') {
+        const val = optVal?.toLowerCase();
+        if (val === 'strict' || val === 'lax' || val === 'none') {
+          options.sameSite = val;
+        }
+      }
+    }
+
+    if (options.expires && options.expires.getTime() < Date.now()) {
+      cookieStore.delete({ name, domain: options.domain, path: options.path });
+    } else {
+      cookieStore.set(name, value, options);
+    }
+  }
+};
+
 /**
  * Constrói um `ProblemDetails` sintético para representar falhas de rede
  * ou timeout que não possuem um corpo HTTP para parsear.
@@ -181,6 +225,7 @@ export const api = {
       });
 
       clearTimeout(timeoutId);
+      await forwardCookies(response);
       return await parseResponse<T>(response);
     } catch (err) {
       clearTimeout(timeoutId);

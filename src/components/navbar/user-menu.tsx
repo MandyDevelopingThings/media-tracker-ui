@@ -10,6 +10,8 @@ import {
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
+import { startTransition } from 'react';
+import { logoutAction } from '@/features/accounts/actions/logout';
 
 type UserMenuProps = {
   dict: {
@@ -58,6 +60,9 @@ export const UserMenu = ({ dict }: UserMenuProps) => {
           id="navbar-logout-item"
           variant="destructive"
           className="cursor-pointer gap-2"
+          onClick={() => startTransition(() => {
+            void logoutAction();
+          })}
         >
           <LogOut className="h-4 w-4" />
           {dict.logout}

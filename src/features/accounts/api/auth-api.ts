@@ -12,3 +12,7 @@ export const registerUser = async (payload: RegisterPayload) => {
 export const forgotPassword = async (payload: ForgotPasswordPayload) => {
   return api.command<undefined>("/api/Passwords/forgot-password", payload);
 };
+
+export const logoutUser = async () => {
+  return api.command<undefined>("/api/authentication/logout", {});
+};

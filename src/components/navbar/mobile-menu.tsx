@@ -14,6 +14,8 @@ import { ThemeToggle } from '@/components/theme-toggle';
 import { SearchBar } from './search-bar';
 import { cn } from '@/lib/utils';
 import type { Locale } from '@/lib/i18n-config';
+import { startTransition } from 'react';
+import { logoutAction } from '@/features/accounts/actions/logout';
 
 type MobileMenuDict = {
   searchPlaceholder: string;
@@ -97,6 +99,9 @@ export const MobileMenu = ({ authenticated, currentLocale, dict }: MobileMenuPro
             </Link>
             <button
               type="button"
+              onClick={() => startTransition(() => {
+                void logoutAction();
+              })}
               className={cn(
                 sectionLinkClass,
                 'text-destructive/80 hover:bg-destructive/10 hover:text-destructive',
