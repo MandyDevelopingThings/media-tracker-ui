@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export type MediaType = 'Movie' | 'TVShow' | 'Unknown';
+export type MediaType = 'Movie' | 'TVShow' | 'Unknown' | 'movie' | 'tv';
 
 export type MediaSearchItem = Readonly<{
   tmdbId: number;
@@ -32,3 +32,38 @@ export type MediaSearchParams = z.infer<typeof MediaSearchParamsSchema>;
 export type SearchLayout = 'grid' | 'table';
 export const SEARCH_LAYOUT_COOKIE = 'SEARCH_LAYOUT' as const;
 export const DEFAULT_SEARCH_LAYOUT: SearchLayout = 'grid';
+
+export type CastMemberDto = Readonly<{
+  id: number;
+  name: string;
+  character: string;
+  profilePath: string;
+}>;
+
+export type EpisodeDto = Readonly<{
+  episodeNumber: number;
+  title: string;
+}>;
+
+export type SeasonDto = Readonly<{
+  seasonNumber: number;
+  name: string;
+  episodes: readonly EpisodeDto[];
+}>;
+
+export type MediaDetailsDto = Readonly<{
+  tmdbId: number;
+  title: string;
+  posterPath: string;
+  backdropPath: string;
+  type: 'movie' | 'tv';
+  overview: string;
+  releaseDate: string;
+  status: string;
+  runtime: number;
+  genres: readonly string[];
+  numberOfSeasons: number | null;
+  numberOfEpisodes: number | null;
+  seasons: readonly SeasonDto[] | null;
+  topCast: readonly CastMemberDto[];
+}>;

@@ -8,12 +8,19 @@ type MediaTypeBadgeProps = {
 
 const badgeStyles: Record<MediaType, string> = {
   Movie: 'bg-primary/15 text-primary border-primary/25',
+  movie: 'bg-primary/15 text-primary border-primary/25',
   TVShow: 'bg-blue-500/15 text-blue-400 border-blue-500/25',
+  tv: 'bg-blue-500/15 text-blue-400 border-blue-500/25',
   Unknown: 'bg-muted text-muted-foreground border-border',
 };
 
 export const MediaTypeBadge = ({ type, dict }: MediaTypeBadgeProps) => {
-  const label = type === 'Movie' ? dict.movie : type === 'TVShow' ? dict.tvShow : dict.unknown;
+  const label =
+    type === 'Movie' || type === 'movie'
+      ? dict.movie
+      : type === 'TVShow' || type === 'tv'
+      ? dict.tvShow
+      : dict.unknown;
 
   return (
     <span

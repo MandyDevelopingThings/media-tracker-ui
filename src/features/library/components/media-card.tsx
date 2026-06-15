@@ -10,9 +10,15 @@ type MediaCardProps = {
   priority?: boolean;
 };
 
+const resolveHref = (item: MediaSearchItem): string => {
+  if (item.type === 'Movie' || item.type === 'movie') return `/movie/${item.tmdbId}`;
+  if (item.type === 'TVShow' || item.type === 'tv') return `/tv/${item.tmdbId}`;
+  return `/movie/${item.tmdbId}`;
+};
+
 export const MediaCard = ({ item, dict, priority }: MediaCardProps) => (
   <Link
-    href={`/media/${item.tmdbId}`}
+    href={resolveHref(item)}
     id={`media-card-${item.tmdbId}`}
     className={cn(
       'group flex flex-col rounded-xl overflow-hidden',

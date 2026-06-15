@@ -38,5 +38,26 @@
       "next": "Next",
       "pageOf": "of"
     }
+  },
+  "details": {
+    "pageTitle": "{title} — MediaTracker",
+    "overview": "Overview",
+    "cast": "Cast",
+    "genres": "Genres",
+    "status": "Status",
+    "runtime": "{n} min",
+    "episodes": "Episodes",
+    "seasons": "Seasons",
+    "specials": "Specials",
+    "addWatched": "Mark as watched",
+    "notFound": "Media not found.",
+    "errorHint": "Please try again in a moment.",
+    "released": "Released",
+    "ended": "Ended",
+    "ongoing": "Ongoing",
+    "loadingEpisodes": "Loading episodes...",
+    "episode": "Ep.",
+    "noPoster": "No poster",
+    "noOverview": "No overview available."
   }
 }

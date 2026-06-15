@@ -38,5 +38,26 @@
       "next": "Próximo",
       "pageOf": "de"
     }
+  },
+  "details": {
+    "pageTitle": "{title} — MediaTracker",
+    "overview": "Sinopse",
+    "cast": "Elenco",
+    "genres": "Gêneros",
+    "status": "Status",
+    "runtime": "{n} min",
+    "episodes": "Episódios",
+    "seasons": "Temporadas",
+    "specials": "Especiais",
+    "addWatched": "Marcar como assistido",
+    "notFound": "Mídia não encontrada.",
+    "errorHint": "Tente novamente em alguns instantes.",
+    "released": "Lançado",
+    "ended": "Encerrado",
+    "ongoing": "Em andamento",
+    "loadingEpisodes": "Carregando episódios...",
+    "episode": "Ep.",
+    "noPoster": "Sem poster",
+    "noOverview": "Nenhuma sinopse disponível."
   }
 }

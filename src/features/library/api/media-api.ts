@@ -1,5 +1,5 @@
 import { api } from '@/lib/api-client';
-import type { MediaSearchResult, MediaSearchParams } from '../types';
+import type { MediaSearchResult, MediaSearchParams, MediaDetailsDto, SeasonDto } from '../types';
 
 export const searchMedia = async (params: MediaSearchParams) => {
   const qs = new URLSearchParams();
@@ -12,3 +12,18 @@ export const searchMedia = async (params: MediaSearchParams) => {
     cache: 'no-store',
   });
 };
+
+export const getMovieDetails = async (tmdbId: number) =>
+  api.query<MediaDetailsDto>(`/api/Media/movie/${tmdbId}`, {
+    tags: [`media-movie-${tmdbId}`],
+  });
+
+export const getTvDetails = async (tmdbId: number) =>
+  api.query<MediaDetailsDto>(`/api/Media/tv/${tmdbId}`, {
+    tags: [`media-tv-${tmdbId}`],
+  });
+
+export const getSeasonDetails = async (tmdbId: number, seasonNumber: number) =>
+  api.query<SeasonDto>(`/api/Media/tv/${tmdbId}/season/${seasonNumber}`, {
+    tags: [`season-${tmdbId}-${seasonNumber}`],
+  });
