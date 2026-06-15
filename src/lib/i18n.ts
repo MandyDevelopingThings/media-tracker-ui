@@ -11,7 +11,12 @@ const dictionaries = {
     'pt-BR': () => import('@/dictionaries/accounts/pt-BR.json'),
     'en-US': () => import('@/dictionaries/accounts/en-US.json'),
   },
+  library: {
+    'pt-BR': () => import('@/dictionaries/library/pt-BR.json'),
+    'en-US': () => import('@/dictionaries/library/en-US.json'),
+  },
 } as const;
+
 
 export type DictionaryNamespace = keyof typeof dictionaries;
 

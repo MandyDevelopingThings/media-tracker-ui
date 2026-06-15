@@ -21,6 +21,8 @@ export const SearchBar = ({ placeholder, className }: SearchBarProps) => (
       name="q"
       placeholder={placeholder}
       autoComplete="off"
+      required
+      minLength={1}
       className={cn(
         'h-10 w-full rounded-xl border border-primary/20 bg-primary/5',
         'pl-4 pr-11 text-sm text-foreground placeholder:text-muted-foreground',

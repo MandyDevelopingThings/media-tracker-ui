@@ -1,0 +1,42 @@
+{
+  "search": {
+    "pageTitle": "Busca — MediaTracker",
+    "pageDescription": "Pesquise filmes, séries e mais no MediaTracker.",
+    "title": "Resultados para",
+    "resultsCount": "resultado",
+    "resultsCountPlural": "resultados",
+    "noResults": "Nenhum resultado para \"{query}\".",
+    "noResultsHint": "Tente um nome diferente ou remova os filtros.",
+    "errorTitle": "Erro ao buscar",
+    "errorHint": "Tente novamente em alguns instantes.",
+    "filters": {
+      "label": "Filtros",
+      "name": "Nome",
+      "namePlaceholder": "Nome da obra...",
+      "nameRequired": "O nome é obrigatório.",
+      "type": "Tipo de Mídia",
+      "typeAll": "Todos",
+      "typeMovie": "Filme",
+      "typeTvShow": "Série",
+      "year": "Ano",
+      "yearPlaceholder": "Ex: 2023",
+      "yearMin": "Ano mínimo: 1880",
+      "apply": "Aplicar"
+    },
+    "layout": {
+      "grid": "Grade",
+      "table": "Tabela"
+    },
+    "card": {
+      "movie": "Filme",
+      "tvShow": "Série",
+      "unknown": "Desconhecido",
+      "noPoster": "Sem poster"
+    },
+    "pagination": {
+      "previous": "Anterior",
+      "next": "Próximo",
+      "pageOf": "de"
+    }
+  }
+}

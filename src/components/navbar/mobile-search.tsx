@@ -24,9 +24,11 @@ export const MobileSearch = ({ placeholder, searchLabel }: MobileSearchProps) =>
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const q = inputRef.current?.value.trim() ?? '';
+    if (!q) return;
     setIsOpen(false);
     router.push(`/search?q=${encodeURIComponent(q)}`);
   };
+
 
   const iconButtonClass = cn(
     'flex h-9 w-9 items-center justify-center rounded-lg',
