@@ -22,14 +22,26 @@ const applyTheme = (resolved: ResolvedTheme): void => {
   }
 };
 
+const setStoredTheme = (resolved: ResolvedTheme): void => {
+  try {
+    const maxAge = 60 * 60 * 24 * 365; // 1 year
+    document.cookie = `${THEME_STORAGE_KEY}=${resolved}; path=/; max-age=${maxAge}; samesite=lax`;
+  } catch {
+    // ignore write errors
+  }
+};
+
 const readStoredTheme = (): ResolvedTheme | null => {
   try {
-    const stored = localStorage.getItem(THEME_STORAGE_KEY);
-    if (stored === 'neon-green-dark' || stored === 'neon-green-light') {
-      return stored;
+    const match = document.cookie.match(new RegExp(`(^| )${THEME_STORAGE_KEY}=([^;]+)`));
+    if (match) {
+      const stored = match[2];
+      if (stored === 'neon-green-dark' || stored === 'neon-green-light') {
+        return stored as ResolvedTheme;
+      }
     }
   } catch {
-    // localStorage not available (e.g. SSR or privacy mode)
+    // document.cookie not available
   }
   return null;
 };
@@ -60,11 +72,7 @@ export const useTheme = (): UseThemeReturn => {
 
   const setTheme = useCallback((next: Theme): void => {
     const resolved: ResolvedTheme = `${next.id}-${next.variant}`;
-    try {
-      localStorage.setItem(THEME_STORAGE_KEY, resolved);
-    } catch {
-      // ignore write errors
-    }
+    setStoredTheme(resolved);
     setResolvedTheme(resolved);
   }, []);
 
@@ -76,11 +84,7 @@ export const useTheme = (): UseThemeReturn => {
         variant: current.variant === 'dark' ? 'light' : 'dark',
       };
       const resolved: ResolvedTheme = `${next.id}-${next.variant}`;
-      try {
-        localStorage.setItem(THEME_STORAGE_KEY, resolved);
-      } catch {
-        // ignore write errors
-      }
+      setStoredTheme(resolved);
       return resolved;
     });
   }, []);

@@ -27,17 +27,17 @@ export const metadata: Metadata = {
 const themeInitScript = `
 (function () {
   var key = "${THEME_STORAGE_KEY}";
-  var stored = null;
-  try { stored = localStorage.getItem(key); } catch (_) {}
+  var match = document.cookie.match(new RegExp("(^| )" + key + "=([^;]+)"));
+  var stored = match ? match[2] : null;
   var valid = ["neon-green-dark", "neon-green-light"];
-  var resolved = valid.indexOf(stored) !== -1
-    ? stored
-    : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "neon-green-dark" : "neon-green-light");
-  document.documentElement.setAttribute("data-theme", resolved);
-  if (resolved.indexOf("-dark") !== -1) {
-    document.documentElement.classList.add("dark");
-  } else {
-    document.documentElement.classList.remove("dark");
+  if (valid.indexOf(stored) === -1) {
+    var resolved = window.matchMedia("(prefers-color-scheme: dark)").matches ? "neon-green-dark" : "neon-green-light";
+    document.documentElement.setAttribute("data-theme", resolved);
+    if (resolved.indexOf("-dark") !== -1) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
   }
 })();
 `.trim();
@@ -51,6 +51,11 @@ export default async function RootLayout({
   const rawLocale = cookieStore.get("NEXT_LOCALE")?.value;
   const locale = isValidLocale(rawLocale) ? rawLocale : DEFAULT_LOCALE;
 
+  const themeCookie = cookieStore.get(THEME_STORAGE_KEY)?.value;
+  const initialTheme = (themeCookie === "neon-green-dark" || themeCookie === "neon-green-light")
+    ? themeCookie
+    : null;
+
   return (
     <html
       lang={locale}
@@ -60,11 +65,13 @@ export default async function RootLayout({
         geistMono.variable,
         inter.variable,
         "font-sans",
+        initialTheme && initialTheme.includes("-dark") ? "dark" : ""
       )}
+      data-theme={initialTheme || undefined}
       suppressHydrationWarning
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        {!initialTheme && <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />}
       </head>
       <body className="min-h-full flex flex-col">
         <Navbar />
