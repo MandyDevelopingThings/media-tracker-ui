@@ -13,6 +13,8 @@ import { UserMenu } from './user-menu';
 import { MobileSearch } from './mobile-search';
 import { MobileMenu } from './mobile-menu';
 import { cn } from '@/lib/utils';
+import { getCurrentUser } from '@/features/accounts/api/user-api';
+import type { CurrentUserDto } from '@/features/accounts/types';
 
 export const Navbar = async () => {
   const cookieStore = await cookies();
@@ -23,6 +25,14 @@ export const Navbar = async () => {
     isAuthenticated(),
     getDictionary('common', locale),
   ]);
+
+  let currentUser: CurrentUserDto | undefined;
+  if (authenticated) {
+    const userRes = await getCurrentUser();
+    if (userRes.success) {
+      currentUser = userRes.data;
+    }
+  }
 
   const nav = dict.nav;
 
@@ -88,7 +98,7 @@ export const Navbar = async () => {
           <div className="mx-1.5 h-5 w-px bg-border" />
 
           {authenticated ? (
-            <UserMenu dict={{ myProfile: nav.myProfile, logout: nav.logout }} />
+            <UserMenu currentUser={currentUser} dict={{ myProfile: nav.myProfile, logout: nav.logout }} />
           ) : (
             <AuthButtons dict={{ login: nav.login, register: nav.register }} />
           )}
@@ -101,6 +111,7 @@ export const Navbar = async () => {
           />
           <MobileMenu
             authenticated={authenticated}
+            currentUser={currentUser}
             currentLocale={locale}
             dict={{
               searchPlaceholder: nav.searchPlaceholder,

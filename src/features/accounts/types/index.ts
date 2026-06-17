@@ -34,3 +34,8 @@ export type FormState<T = undefined> = {
   globalError?: string;
   fieldErrors?: Partial<Record<string, string[] | readonly string[]>>;
 };
+
+export type CurrentUserDto = Readonly<{
+  id: string;
+  userName: string;
+}>;

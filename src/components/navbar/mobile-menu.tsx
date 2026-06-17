@@ -16,6 +16,7 @@ import { cn } from '@/lib/utils';
 import type { Locale } from '@/lib/i18n-config';
 import { startTransition } from 'react';
 import { logoutAction } from '@/features/accounts/actions/logout';
+import type { CurrentUserDto } from '@/features/accounts/types';
 
 type MobileMenuDict = {
   searchPlaceholder: string;
@@ -29,6 +30,7 @@ type MobileMenuDict = {
 
 type MobileMenuProps = {
   authenticated: boolean;
+  currentUser?: CurrentUserDto;
   currentLocale: Locale;
   dict: MobileMenuDict;
 };
@@ -39,7 +41,7 @@ const sectionLinkClass = cn(
   'hover:bg-primary/10 hover:text-foreground',
 );
 
-export const MobileMenu = ({ authenticated, currentLocale, dict }: MobileMenuProps) => (
+export const MobileMenu = ({ authenticated, currentUser, currentLocale, dict }: MobileMenuProps) => (
   <Sheet>
     <SheetTrigger
       id="navbar-mobile-menu-btn"
@@ -93,9 +95,11 @@ export const MobileMenu = ({ authenticated, currentLocale, dict }: MobileMenuPro
             <p className="mb-2 px-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
               Conta
             </p>
-            <Link href="/profile" className={sectionLinkClass}>
+            <Link href={currentUser ? `/profile/${currentUser.userName}` : '/profile'} className={sectionLinkClass}>
               <User className="h-4 w-4 shrink-0 text-muted-foreground" />
-              {dict.myProfile}
+              <span className="truncate">
+                {currentUser?.userName || dict.myProfile}
+              </span>
             </Link>
             <button
               type="button"

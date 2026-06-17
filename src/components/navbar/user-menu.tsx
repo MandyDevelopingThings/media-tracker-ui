@@ -12,15 +12,17 @@ import {
 import { cn } from '@/lib/utils';
 import { startTransition } from 'react';
 import { logoutAction } from '@/features/accounts/actions/logout';
+import type { CurrentUserDto } from '@/features/accounts/types';
 
 type UserMenuProps = {
+  currentUser?: CurrentUserDto;
   dict: {
     myProfile: string;
     logout: string;
   };
 };
 
-export const UserMenu = ({ dict }: UserMenuProps) => {
+export const UserMenu = ({ currentUser, dict }: UserMenuProps) => {
   const router = useRouter();
 
   return (
@@ -37,7 +39,9 @@ export const UserMenu = ({ dict }: UserMenuProps) => {
           'active:scale-95',
         )}
       >
-        {dict.myProfile}
+        <span className="max-w-[120px] truncate">
+          {currentUser?.userName || dict.myProfile}
+        </span>
         <ChevronDown
           className={cn(
             'h-3.5 w-3.5 transition-transform duration-200',
@@ -50,10 +54,12 @@ export const UserMenu = ({ dict }: UserMenuProps) => {
         <DropdownMenuItem
           id="navbar-profile-item"
           className="cursor-pointer gap-2"
-          onClick={() => router.push('/profile')}
+          onClick={() => router.push(currentUser ? `/profile/${currentUser.userName}` : '/profile')}
         >
           <User className="h-4 w-4" />
-          {dict.myProfile}
+          <span className="max-w-[150px] truncate">
+            {dict.myProfile}
+          </span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
