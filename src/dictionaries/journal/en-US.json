@@ -1,0 +1,27 @@
+{
+  "reviews": {
+    "title": "Reviews",
+    "emptyState": "No reviews found. Be the first!",
+    "readMore": "Read more",
+    "revealSpoiler": "Reveal Spoiler",
+    "form": {
+      "titlePlaceholder": "Title (optional)",
+      "contentPlaceholder": "Write your review...",
+      "ratingLabel": "Your Rating",
+      "spoilersLabel": "Spoilers",
+      "syncGlobalLabel": "Sync Global",
+      "submitButton": "Publish"
+    },
+    "sort": {
+      "label": "Sort by:",
+      "dateDesc": "Newest",
+      "dateAsc": "Oldest",
+      "ratingDesc": "Highest rating",
+      "ratingAsc": "Lowest rating"
+    },
+    "pagination": {
+      "prev": "Previous",
+      "next": "Next"
+    }
+  }
+}

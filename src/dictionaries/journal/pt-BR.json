@@ -1,0 +1,27 @@
+{
+  "reviews": {
+    "title": "Avaliações",
+    "emptyState": "Nenhuma avaliação encontrada. Seja o primeiro!",
+    "readMore": "Ler mais",
+    "revealSpoiler": "Revelar Spoiler",
+    "form": {
+      "titlePlaceholder": "Título (opcional)",
+      "contentPlaceholder": "Escreva sua avaliação...",
+      "ratingLabel": "Sua Nota",
+      "spoilersLabel": "Spoilers",
+      "syncGlobalLabel": "Sync Global",
+      "submitButton": "Publicar"
+    },
+    "sort": {
+      "label": "Ordenar por:",
+      "dateDesc": "Mais recentes",
+      "dateAsc": "Mais antigas",
+      "ratingDesc": "Maior nota",
+      "ratingAsc": "Menor nota"
+    },
+    "pagination": {
+      "prev": "Anterior",
+      "next": "Próxima"
+    }
+  }
+}

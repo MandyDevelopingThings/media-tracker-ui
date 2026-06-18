@@ -7,11 +7,13 @@ import { isValidLocale, DEFAULT_LOCALE } from '@/lib/i18n-config';
 import { isAuthenticated } from '@/lib/auth';
 import { getTvDetails } from '@/features/library/api/media-api';
 import { MediaDetailsHeader } from '@/features/library/components/media-details-header';
+import { ReviewSection } from '@/features/journal/components/ReviewSection';
 
 const TmdbIdSchema = z.coerce.number().int().positive();
 
 type TvPageProps = {
   params: Promise<{ tmdbId: string }>;
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 export const generateMetadata = async ({
@@ -39,7 +41,7 @@ export const generateMetadata = async ({
   };
 };
 
-export default async function TvPage({ params }: TvPageProps) {
+export default async function TvPage({ params, searchParams }: TvPageProps) {
   const { tmdbId: raw } = await params;
   const parsed = TmdbIdSchema.safeParse(raw);
 
@@ -57,6 +59,16 @@ export default async function TvPage({ params }: TvPageProps) {
 
   if (!result.success) notFound();
 
+  const sp = searchParams ? await searchParams : undefined;
+  const reviewSearchParams = sp ? {
+    page: typeof sp.page === 'string' ? sp.page : undefined,
+    minRating: typeof sp.minRating === 'string' ? sp.minRating : undefined,
+    maxRating: typeof sp.maxRating === 'string' ? sp.maxRating : undefined,
+    hasSpoilers: typeof sp.hasSpoilers === 'string' ? sp.hasSpoilers : undefined,
+    orderBy: typeof sp.orderBy === 'string' ? sp.orderBy : undefined,
+    isAscending: typeof sp.isAscending === 'string' ? sp.isAscending : undefined,
+  } : undefined;
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
@@ -65,6 +77,7 @@ export default async function TvPage({ params }: TvPageProps) {
           isAuthenticated={authenticated}
           dict={dict.details}
         />
+        <ReviewSection tmdbId={parsed.data} type={1} searchParams={reviewSearchParams} />
       </div>
     </div>
   );
