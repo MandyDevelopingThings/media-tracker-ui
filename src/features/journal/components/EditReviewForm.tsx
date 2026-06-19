@@ -60,7 +60,7 @@ export const EditReviewForm = ({ review, dict, onSuccess }: EditReviewFormProps)
       {/* Content */}
       <div className="flex flex-col gap-1.5">
         <Label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-          {(dict as any).contentLabel || 'CONTEÚDO'}
+          {(dict as any).contentLabel || 'CONTEÚDO'} <span className="text-destructive ml-0.5">*</span>
         </Label>
         <textarea
           name="content"
