@@ -5,12 +5,24 @@
     "readMore": "Read more",
     "revealSpoiler": "Reveal Spoiler",
     "form": {
-      "titlePlaceholder": "Title (optional)",
-      "contentPlaceholder": "Write your review...",
+      "titleLabel": "Title",
+      "contentLabel": "Content",
+      "optional": "optional",
+      "titlePlaceholder": "e.g. A great surprise...",
+      "contentPlaceholder": "What did you think of the story, characters, or direction?",
       "ratingLabel": "Your Rating",
       "spoilersLabel": "Spoilers",
       "syncGlobalLabel": "Sync Global",
-      "submitButton": "Publish"
+      "submitButton": "Publish",
+      "editButton": "Save Changes"
+    },
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete",
+      "deleteConfirmTitle": "Are you sure?",
+      "deleteConfirmDesc": "This action cannot be undone. This will permanently delete your review.",
+      "cancel": "Cancel",
+      "confirmDelete": "Delete Review"
     },
     "sort": {
       "label": "Sort by:",

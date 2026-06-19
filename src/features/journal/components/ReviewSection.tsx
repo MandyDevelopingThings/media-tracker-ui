@@ -3,6 +3,7 @@ import { cookies } from 'next/headers';
 import { getDictionary } from '@/lib/i18n';
 import type { Locale } from '@/lib/i18n-config';
 import { getReviews } from '@/features/journal/api/get-reviews';
+import { getCurrentUser } from '@/features/accounts/api/user-api';
 import { ReviewForm } from './ReviewForm';
 import { ReviewList } from './ReviewList';
 
@@ -24,6 +25,10 @@ export const ReviewSection = async ({ tmdbId, type, searchParams }: ReviewSectio
   const locale = (cookieStore.get('NEXT_LOCALE')?.value || 'en-US') as Locale;
   const fullDict = await getDictionary('journal', locale);
   const dict = fullDict.reviews;
+
+  // Fetch current user id to determine ownership of reviews
+  const userRes = await getCurrentUser();
+  const currentUserId = userRes.success ? userRes.data.id : null;
 
   // Fetch reviews based on searchParams
   const page = searchParams?.page ? parseInt(searchParams.page, 10) : 1;
@@ -67,6 +72,7 @@ export const ReviewSection = async ({ tmdbId, type, searchParams }: ReviewSectio
             totalPages={pagedReviews.totalPages}
             currentPage={page}
             dict={dict}
+            currentUserId={currentUserId}
           />
         )}
         {!pagedReviews && (

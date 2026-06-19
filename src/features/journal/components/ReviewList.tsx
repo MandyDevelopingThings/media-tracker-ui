@@ -13,9 +13,10 @@ type ReviewListProps = {
   totalPages: number;
   currentPage: number;
   dict: Dictionary<'journal'>['reviews'];
+  currentUserId?: string | null;
 };
 
-export const ReviewList = ({ reviews, totalPages, currentPage, dict }: ReviewListProps) => {
+export const ReviewList = ({ reviews, totalPages, currentPage, dict, currentUserId }: ReviewListProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -87,7 +88,7 @@ export const ReviewList = ({ reviews, totalPages, currentPage, dict }: ReviewLis
 
       <div className="flex flex-col space-y-2 relative before:absolute before:inset-y-0 before:left-0 before:w-[2px] before:bg-white/5 ml-2 md:ml-0">
         {reviews.map(review => (
-          <ReviewItem key={review.id} review={review} dict={dict} />
+          <ReviewItem key={review.id} review={review} dict={dict} currentUserId={currentUserId} />
         ))}
       </div>
       

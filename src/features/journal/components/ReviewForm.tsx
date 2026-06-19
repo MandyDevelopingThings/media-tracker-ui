@@ -53,30 +53,36 @@ export const ReviewForm = ({ tmdbId, type, dict }: ReviewFormProps) => {
 
         {/* Title */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="flex flex-col space-y-1">
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+              {(dict as any).titleLabel || 'TÍTULO'} <span className="font-normal normal-case lowercase ml-1 opacity-70">({(dict as any).optional || 'opcional'})</span>
+            </Label>
             <input 
               name="title"
               type="text" 
               placeholder={dict.titlePlaceholder} 
-              className="w-full bg-background border border-border/40 rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary/50 focus:border-primary/50 transition-all"
+              className="w-full bg-background border border-border/40 rounded-lg px-4 py-2.5 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/60 transition-all"
             />
             {state.errors?.title && <span className="text-red-400 text-xs">{state.errors.title[0]}</span>}
           </div>
         </div>
 
         {/* Content */}
-        <div className="flex flex-col space-y-1">
+        <div className="flex flex-col gap-1.5">
+          <Label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+            {(dict as any).contentLabel || 'CONTEÚDO'}
+          </Label>
           <textarea 
             name="content"
             placeholder={dict.contentPlaceholder} 
-            rows={4}
-            className="w-full bg-background border border-border/40 rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary/50 focus:border-primary/50 transition-all resize-none"
+            rows={5}
+            className="w-full bg-background border border-border/40 rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/60 transition-all resize-none"
           ></textarea>
           {state.errors?.content && <span className="text-red-400 text-xs">{state.errors.content[0]}</span>}
         </div>
 
         {/* Actions Row (Unified Toolbar) */}
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-6 pt-4 border-t border-border/40 mt-4">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-6 pt-3 border-t border-border/40 mt-2">
           
           {/* Toolbar Container */}
           <div className="flex flex-col md:flex-row items-center w-full lg:w-auto bg-muted/30 border border-border/40 rounded-xl p-4 md:py-2 md:px-6">

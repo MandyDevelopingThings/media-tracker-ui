@@ -5,12 +5,24 @@
     "readMore": "Ler mais",
     "revealSpoiler": "Revelar Spoiler",
     "form": {
-      "titlePlaceholder": "Título (opcional)",
-      "contentPlaceholder": "Escreva sua avaliação...",
+      "titleLabel": "Título",
+      "contentLabel": "Conteúdo",
+      "optional": "opcional",
+      "titlePlaceholder": "Ex: Uma ótima surpresa...",
+      "contentPlaceholder": "O que você achou da história, personagens ou direção?",
       "ratingLabel": "Sua Nota",
       "spoilersLabel": "Spoilers",
       "syncGlobalLabel": "Sync Global",
-      "submitButton": "Publicar"
+      "submitButton": "Publicar",
+      "editButton": "Salvar Alterações"
+    },
+    "actions": {
+      "edit": "Editar",
+      "delete": "Excluir",
+      "deleteConfirmTitle": "Tem certeza?",
+      "deleteConfirmDesc": "Essa ação não pode ser desfeita. Isso excluirá permanentemente a sua avaliação.",
+      "cancel": "Cancelar",
+      "confirmDelete": "Excluir Avaliação"
     },
     "sort": {
       "label": "Ordenar por:",
