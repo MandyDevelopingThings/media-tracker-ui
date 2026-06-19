@@ -20,6 +20,7 @@ type SeasonTabsProps = {
     episode: string;
     errorHint: string;
   };
+  watchedEpisodes?: Record<number, number[]>;
 };
 
 const buildInitialEpisodesMap = (
@@ -34,6 +35,7 @@ export const SeasonTabs = ({
   seasons,
   isAuthenticated,
   dict,
+  watchedEpisodes,
 }: SeasonTabsProps) => {
   const regularSeasons = seasons.filter((s) => s.seasonNumber !== 0);
   const specialsSeason = seasons.find((s) => s.seasonNumber === 0);
@@ -135,15 +137,21 @@ export const SeasonTabs = ({
           </p>
         ) : (
           <div className="flex flex-col gap-0.5 max-h-[420px] overflow-y-auto pr-1 scrollbar-thin">
-            {currentEpisodes.map((episode) => (
-              <EpisodeRow
-                key={episode.episodeNumber}
-                episode={episode}
-                isAuthenticated={isAuthenticated}
-                addWatchedLabel={dict.addWatched}
-                episodeLabel={dict.episode}
-              />
-            ))}
+            {currentEpisodes.map((episode) => {
+              const isWatched = watchedEpisodes?.[activeSeason]?.includes(episode.episodeNumber) ?? false;
+              return (
+                <EpisodeRow
+                  key={episode.episodeNumber}
+                  tmdbId={tmdbId}
+                  seasonNumber={activeSeason}
+                  episode={episode}
+                  isAuthenticated={isAuthenticated}
+                  addWatchedLabel={dict.addWatched}
+                  episodeLabel={dict.episode}
+                  isWatched={isWatched}
+                />
+              );
+            })}
           </div>
         )}
       </div>

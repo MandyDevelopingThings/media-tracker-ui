@@ -1,19 +1,26 @@
-import { Plus } from 'lucide-react';
+import { Plus, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { LogEpisodeDialog } from '@/features/journal/components/log-episode-dialog';
 import type { EpisodeDto } from '../types';
 
 type EpisodeRowProps = {
+  tmdbId: number;
+  seasonNumber: number;
   episode: EpisodeDto;
   isAuthenticated: boolean;
   addWatchedLabel: string;
   episodeLabel: string;
+  isWatched?: boolean;
 };
 
 export const EpisodeRow = ({
+  tmdbId,
+  seasonNumber,
   episode,
   isAuthenticated,
   addWatchedLabel,
   episodeLabel,
+  isWatched,
 }: EpisodeRowProps) => (
   <div
     className={cn(
@@ -37,24 +44,23 @@ export const EpisodeRow = ({
       {episode.title}
     </span>
 
-    {isAuthenticated && (
-      <button
-        type="button"
-        disabled
-        aria-label={addWatchedLabel}
-        title={addWatchedLabel}
-        className={cn(
-          'flex-shrink-0 flex items-center justify-center',
-          'w-7 h-7 rounded-full',
-          'border border-primary/30 text-primary/60',
-          'opacity-0 group-hover:opacity-100',
-          'transition-all duration-150',
-          'hover:bg-primary/10 hover:border-primary/60 hover:text-primary',
-          'disabled:cursor-not-allowed',
-        )}
+    {isWatched && (
+      <div
+        title="Episódio assistido"
+        className="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-green-500/10 text-green-500 mr-1"
       >
-        <Plus className="w-4 h-4" />
-      </button>
+        <Check className="w-3.5 h-3.5" />
+      </div>
+    )}
+
+    {isAuthenticated && (
+      <LogEpisodeDialog
+        tmdbShowId={tmdbId}
+        seasonNumber={seasonNumber}
+        episode={episode}
+        addWatchedLabel={addWatchedLabel}
+        episodeLabel={episodeLabel}
+      />
     )}
   </div>
 );

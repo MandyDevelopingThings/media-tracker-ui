@@ -99,17 +99,20 @@ const buildNetworkError = (
   detail: string,
 ): ProblemDetails => ({ status, title, detail });
 
-/**
- * Tenta parsear o corpo da resposta como `ProblemDetails`. Se o corpo
- * estiver vazio ou malformado, retorna um `ProblemDetails` sintético.
- */
 const parseProblemDetails = async (
   response: Response,
 ): Promise<ProblemDetails> => {
+  let text = "";
   try {
-    const body = await response.json();
-    // O .NET pode retornar tanto o formato padrão do ProblemDetails quanto
-    // um objeto customizado do Result pattern — ambos têm `title` ou `detail`.
+    text = await response.text();
+    if (!text.trim()) {
+      return buildNetworkError(
+        response.status,
+        response.statusText || "Erro",
+        "A resposta de erro do servidor está vazia.",
+      );
+    }
+    const body = JSON.parse(text);
     return {
       status: response.status,
       title: (body.title as string) ?? response.statusText,
@@ -122,7 +125,7 @@ const parseProblemDetails = async (
     return buildNetworkError(
       response.status,
       response.statusText || "Erro desconhecido",
-      "Não foi possível parsear o corpo da resposta de erro.",
+      text ? `Resposta não-JSON: ${text.substring(0, 100)}` : "Não foi possível parsear o corpo da resposta de erro.",
     );
   }
 };

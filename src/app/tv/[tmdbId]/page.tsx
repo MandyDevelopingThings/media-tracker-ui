@@ -59,6 +59,15 @@ export default async function TvPage({ params, searchParams }: TvPageProps) {
 
   if (!result.success) notFound();
 
+  let watchedEpisodes: Record<number, number[]> | undefined;
+  if (authenticated) {
+    const { getWatchEntry } = await import('@/features/journal/api/get-watch-entry');
+    const watchEntryRes = await getWatchEntry(parsed.data, 1); // 1 = TvShow
+    if (watchEntryRes.success && watchEntryRes.data?.watchedEpisodes) {
+      watchedEpisodes = watchEntryRes.data.watchedEpisodes;
+    }
+  }
+
   const sp = searchParams ? await searchParams : undefined;
   const reviewSearchParams = sp ? {
     page: typeof sp.page === 'string' ? sp.page : undefined,
@@ -76,6 +85,7 @@ export default async function TvPage({ params, searchParams }: TvPageProps) {
           media={result.data}
           isAuthenticated={authenticated}
           dict={dict.details}
+          watchedEpisodes={watchedEpisodes}
         />
         <ReviewSection tmdbId={parsed.data} type={1} searchParams={reviewSearchParams} />
       </div>

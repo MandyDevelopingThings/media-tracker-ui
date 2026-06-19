@@ -15,6 +15,7 @@ type MediaDetailsHeaderProps = {
   media: MediaDetailsDto;
   isAuthenticated: boolean;
   dict: DetailsDictionary;
+  watchedEpisodes?: Record<number, number[]>;
 };
 
 const GenrePill = ({ genre }: { genre: string }) => (
@@ -104,6 +105,7 @@ export const MediaDetailsHeader = ({
   media,
   isAuthenticated,
   dict,
+  watchedEpisodes,
 }: MediaDetailsHeaderProps) => {
   const releaseYear = media.releaseDate
     ? new Date(media.releaseDate).getFullYear()
@@ -265,6 +267,7 @@ export const MediaDetailsHeader = ({
                   seasons={media.seasons}
                   isAuthenticated={isAuthenticated}
                   dict={dict}
+                  watchedEpisodes={watchedEpisodes}
                 />
               </SectionCard>
             )
