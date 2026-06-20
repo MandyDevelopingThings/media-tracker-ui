@@ -203,7 +203,7 @@ export const LogEpisodeDialog = ({
                   if (val < 0) val = 0;
                   setRating(val);
                 }}
-                className="w-14 bg-background border border-border/40 rounded-md py-1.5 text-center text-primary font-bold text-sm focus:outline-none focus:ring-1 focus:ring-primary/50"
+                className="w-14 bg-background border border-border/40 rounded-md py-1.5 text-center text-primary font-bold text-sm focus:outline-none focus:ring-1 focus:ring-primary/50 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 placeholder="-"
               />
             </div>

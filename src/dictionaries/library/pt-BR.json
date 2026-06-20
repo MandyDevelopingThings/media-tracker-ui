@@ -60,6 +60,16 @@
     "noPoster": "Sem poster",
     "noOverview": "Nenhuma sinopse disponível.",
     "markSeason": "Marcar temporada",
-    "logSeasonHint": "Episódios já registrados nesta sessão não serão duplicados. Apenas os episódios faltantes serão adicionados."
+    "logSeasonHint": "Episódios já registrados nesta sessão não serão duplicados. Apenas os episódios faltantes serão adicionados.",
+    "addSession": {
+      "button": "Nova Sessão",
+      "title": "Registrar nova sessão",
+      "startedAt": "Início",
+      "finishedAt": "Término",
+      "stoppedAtSeason": "Parou na temporada",
+      "stoppedAtEpisode": "Parou no episódio",
+      "save": "Salvar",
+      "autoAddHint": "Se você ainda não tem esta obra na sua lista, ela será adicionada automaticamente ao registrar uma sessão."
+    }
   }
 }

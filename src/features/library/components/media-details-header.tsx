@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import { MediaBackdrop } from './media-backdrop';
 import { CastGrid } from './cast-grid';
 import { SeasonTabs } from './season-tabs';
+import { AddSessionDialog } from '@/features/journal/components/add-session-dialog';
 import type { MediaDetailsDto } from '../types';
 import type { Dictionary } from '@/lib/i18n';
 
@@ -202,14 +203,25 @@ export const MediaDetailsHeader = ({
               )}
             </div>
 
-            {/* Genres */}
-            {media.genres.length > 0 && (
-              <div className="flex flex-wrap gap-1.5">
-                {media.genres.map((genre) => (
-                  <GenrePill key={genre} genre={genre} />
-                ))}
-              </div>
-            )}
+            {/* Genres + Add Session button row */}
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              {media.genres.length > 0 && (
+                <div className="flex flex-wrap gap-1.5">
+                  {media.genres.map((genre) => (
+                    <GenrePill key={genre} genre={genre} />
+                  ))}
+                </div>
+              )}
+
+              {isAuthenticated && (
+                <AddSessionDialog
+                  tmdbId={media.tmdbId}
+                  mediaType={isMovie ? 'movie' : 'tv'}
+                  mediaTitle={media.title}
+                  dict={dict.addSession}
+                />
+              )}
+            </div>
           </div>
         </div>
       </div>
