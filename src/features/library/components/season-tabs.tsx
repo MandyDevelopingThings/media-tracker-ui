@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, useTransition } from 'react';
+import { useCallback, useState, useTransition } from 'react';
 import { cn } from '@/lib/utils';
 import { Loader2 } from 'lucide-react';
 import { getSeasonDetailsAction } from '../actions/get-season-details';
 import { EpisodeRow } from './episode-row';
+import { LogSeasonDialog } from '@/features/journal/components/log-season-dialog';
 import type { SeasonDto, EpisodeDto } from '../types';
 
 type SeasonTabsProps = {
@@ -19,6 +20,8 @@ type SeasonTabsProps = {
     addWatched: string;
     episode: string;
     errorHint: string;
+    markSeason: string;
+    logSeasonHint: string;
   };
   watchedEpisodes?: Record<number, number[]>;
 };
@@ -55,6 +58,11 @@ export const SeasonTabs = ({
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
+  // Local copy of watched episodes for optimistic updates after season logging
+  const [localWatchedEpisodes, setLocalWatchedEpisodes] = useState<
+    Record<number, number[]>
+  >(watchedEpisodes ?? {});
+
   const handleSeasonSelect = (seasonNumber: number) => {
     setError(null);
     setActiveSeason(seasonNumber);
@@ -76,6 +84,18 @@ export const SeasonTabs = ({
     });
   };
 
+  const handleSeasonWatched = useCallback(
+    (seasonNumber: number, episodeNumbers: number[]) => {
+      setLocalWatchedEpisodes((prev) => ({
+        ...prev,
+        [seasonNumber]: [
+          ...new Set([...(prev[seasonNumber] ?? []), ...episodeNumbers]),
+        ],
+      }));
+    },
+    [],
+  );
+
   const currentEpisodes = episodesMap[activeSeason] ?? [];
   const activeSeasonMeta = orderedSeasons.find(
     (s) => s.seasonNumber === activeSeason,
@@ -87,7 +107,7 @@ export const SeasonTabs = ({
       <div
         role="tablist"
         aria-label={dict.seasons}
-        className="flex flex-wrap gap-2"
+        className="flex flex-wrap items-center gap-2"
       >
         {orderedSeasons.map((season) => {
           const isActive = season.seasonNumber === activeSeason;
@@ -95,25 +115,40 @@ export const SeasonTabs = ({
             season.seasonNumber === 0 ? dict.specials : season.name;
 
           return (
-            <button
-              key={season.seasonNumber}
-              role="tab"
-              id={`season-tab-${season.seasonNumber}`}
-              aria-selected={isActive}
-              aria-controls={`season-panel-${season.seasonNumber}`}
-              type="button"
-              onClick={() => handleSeasonSelect(season.seasonNumber)}
-              className={cn(
-                'px-3 py-1.5 rounded-full text-xs font-semibold',
-                'border transition-all duration-150',
-                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-                isActive
-                  ? 'bg-primary text-primary-foreground border-primary shadow-sm shadow-primary/20'
-                  : 'bg-transparent text-muted-foreground border-border/50 hover:border-primary/40 hover:text-foreground',
+            <div key={season.seasonNumber} className="flex items-center gap-1.5">
+              <button
+                role="tab"
+                id={`season-tab-${season.seasonNumber}`}
+                aria-selected={isActive}
+                aria-controls={`season-panel-${season.seasonNumber}`}
+                type="button"
+                onClick={() => handleSeasonSelect(season.seasonNumber)}
+                className={cn(
+                  'px-3 py-1.5 rounded-full text-xs font-semibold',
+                  'border transition-all duration-150',
+                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+                  isActive
+                    ? 'bg-primary text-primary-foreground border-primary shadow-sm shadow-primary/20'
+                    : 'bg-transparent text-muted-foreground border-border/50 hover:border-primary/40 hover:text-foreground',
+                )}
+              >
+                {label}
+              </button>
+
+              {isActive && isAuthenticated && (
+                <LogSeasonDialog
+                  tmdbShowId={tmdbId}
+                  seasonNumber={season.seasonNumber}
+                  seasonName={label}
+                  totalEpisodes={currentEpisodes.length}
+                  onSuccess={handleSeasonWatched}
+                  dict={{
+                    markSeason: dict.markSeason,
+                    logSeasonHint: dict.logSeasonHint,
+                  }}
+                />
               )}
-            >
-              {label}
-            </button>
+            </div>
           );
         })}
       </div>
@@ -138,7 +173,10 @@ export const SeasonTabs = ({
         ) : (
           <div className="flex flex-col gap-0.5 max-h-[420px] overflow-y-auto pr-1 scrollbar-thin">
             {currentEpisodes.map((episode) => {
-              const isWatched = watchedEpisodes?.[activeSeason]?.includes(episode.episodeNumber) ?? false;
+              const isWatched =
+                localWatchedEpisodes[activeSeason]?.includes(
+                  episode.episodeNumber,
+                ) ?? false;
               return (
                 <EpisodeRow
                   key={episode.episodeNumber}

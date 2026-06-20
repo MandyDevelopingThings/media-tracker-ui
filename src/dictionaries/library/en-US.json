@@ -58,6 +58,8 @@
     "loadingEpisodes": "Loading episodes...",
     "episode": "Ep.",
     "noPoster": "No poster",
-    "noOverview": "No overview available."
+    "noOverview": "No overview available.",
+    "markSeason": "Mark season",
+    "logSeasonHint": "Episodes already logged in this session will not be duplicated. Only missing episodes will be added."
   }
 }

@@ -58,6 +58,8 @@
     "loadingEpisodes": "Carregando episódios...",
     "episode": "Ep.",
     "noPoster": "Sem poster",
-    "noOverview": "Nenhuma sinopse disponível."
+    "noOverview": "Nenhuma sinopse disponível.",
+    "markSeason": "Marcar temporada",
+    "logSeasonHint": "Episódios já registrados nesta sessão não serão duplicados. Apenas os episódios faltantes serão adicionados."
   }
 }
