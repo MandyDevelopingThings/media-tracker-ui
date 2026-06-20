@@ -35,5 +35,30 @@
       "prev": "Previous",
       "next": "Next"
     }
+  },
+  "profile": {
+    "tabs": {
+      "overview": "Overview",
+      "list": "My List",
+      "reviews": "Reviews"
+    },
+    "favorites": {
+      "title": "Favorite Works",
+      "noFavorites": "No favorite works yet."
+    },
+    "lastReview": {
+      "title": "Latest Review",
+      "spoilerBadge": "Spoiler",
+      "readMore": "Read full review"
+    },
+    "stats": {
+      "title": "Statistics",
+      "moviesWatched": "Movies Watched",
+      "episodesWatched": "Episodes Watched",
+      "averageRating": "Average Rating",
+      "reviewsWritten": "Reviews Written"
+    },
+    "notFound": "Profile not found.",
+    "editProfile": "Edit Profile"
   }
 }

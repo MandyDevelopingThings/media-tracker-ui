@@ -59,6 +59,15 @@ export default async function MoviePage({ params, searchParams }: MoviePageProps
 
   if (!result.success) notFound();
 
+  let isFavorite = false;
+  if (authenticated) {
+    const { getWatchEntry } = await import('@/features/journal/api/get-watch-entry');
+    const watchEntryRes = await getWatchEntry(parsed.data, 0); // 0 = Movie
+    if (watchEntryRes.success && watchEntryRes.data) {
+      isFavorite = watchEntryRes.data.isFavorite ?? false;
+    }
+  }
+
   const sp = searchParams ? await searchParams : undefined;
   const reviewSearchParams = sp ? {
     page: typeof sp.page === 'string' ? sp.page : undefined,
@@ -75,7 +84,8 @@ export default async function MoviePage({ params, searchParams }: MoviePageProps
         <MediaDetailsHeader
           media={result.data}
           isAuthenticated={authenticated}
-          dict={dict.details}
+          dict={dict.details as any}
+          isFavorite={isFavorite}
         />
         <ReviewSection tmdbId={parsed.data} type={0} searchParams={reviewSearchParams} />
       </div>

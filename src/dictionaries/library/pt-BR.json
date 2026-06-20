@@ -70,6 +70,10 @@
       "stoppedAtEpisode": "Parou no episódio",
       "save": "Salvar",
       "autoAddHint": "Se você ainda não tem esta obra na sua lista, ela será adicionada automaticamente ao registrar uma sessão."
+    },
+    "favorite": {
+      "add": "Adicionar aos Favoritos",
+      "remove": "Remover dos Favoritos"
     }
   }
 }

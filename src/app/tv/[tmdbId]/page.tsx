@@ -60,11 +60,15 @@ export default async function TvPage({ params, searchParams }: TvPageProps) {
   if (!result.success) notFound();
 
   let watchedEpisodes: Record<number, number[]> | undefined;
+  let isFavorite = false;
   if (authenticated) {
     const { getWatchEntry } = await import('@/features/journal/api/get-watch-entry');
     const watchEntryRes = await getWatchEntry(parsed.data, 1); // 1 = TvShow
-    if (watchEntryRes.success && watchEntryRes.data?.watchedEpisodes) {
-      watchedEpisodes = watchEntryRes.data.watchedEpisodes;
+    if (watchEntryRes.success && watchEntryRes.data) {
+      if (watchEntryRes.data.watchedEpisodes) {
+        watchedEpisodes = watchEntryRes.data.watchedEpisodes;
+      }
+      isFavorite = watchEntryRes.data.isFavorite ?? false;
     }
   }
 
@@ -84,8 +88,9 @@ export default async function TvPage({ params, searchParams }: TvPageProps) {
         <MediaDetailsHeader
           media={result.data}
           isAuthenticated={authenticated}
-          dict={dict.details}
+          dict={dict.details as any}
           watchedEpisodes={watchedEpisodes}
+          isFavorite={isFavorite}
         />
         <ReviewSection tmdbId={parsed.data} type={1} searchParams={reviewSearchParams} />
       </div>

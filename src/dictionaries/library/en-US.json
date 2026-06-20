@@ -70,6 +70,10 @@
       "stoppedAtEpisode": "Stopped at episode",
       "save": "Save",
       "autoAddHint": "If this title isn't on your list yet, it will be added automatically when you log a session."
+    },
+    "favorite": {
+      "add": "Add to Favorites",
+      "remove": "Remove from Favorites"
     }
   }
 }

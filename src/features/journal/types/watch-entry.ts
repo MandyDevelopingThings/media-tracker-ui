@@ -10,4 +10,5 @@ export type WatchEntryDto = Readonly<{
   mediaTitle: string;
   mediaPosterPath?: string;
   watchedEpisodes?: Record<number, number[]>;
+  isFavorite?: boolean;
 }>;

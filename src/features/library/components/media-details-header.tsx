@@ -5,6 +5,7 @@ import { MediaBackdrop } from './media-backdrop';
 import { CastGrid } from './cast-grid';
 import { SeasonTabs } from './season-tabs';
 import { AddSessionDialog } from '@/features/journal/components/add-session-dialog';
+import { ToggleFavoriteButton } from './toggle-favorite-button';
 import type { MediaDetailsDto } from '../types';
 import type { Dictionary } from '@/lib/i18n';
 
@@ -15,8 +16,11 @@ type DetailsDictionary = Dictionary<'library'>['details'];
 type MediaDetailsHeaderProps = {
   media: MediaDetailsDto;
   isAuthenticated: boolean;
-  dict: DetailsDictionary;
+  dict: DetailsDictionary & {
+    favorite: { add: string; remove: string };
+  };
   watchedEpisodes?: Record<number, number[]>;
+  isFavorite?: boolean;
 };
 
 const GenrePill = ({ genre }: { genre: string }) => (
@@ -107,6 +111,7 @@ export const MediaDetailsHeader = ({
   isAuthenticated,
   dict,
   watchedEpisodes,
+  isFavorite,
 }: MediaDetailsHeaderProps) => {
   const releaseYear = media.releaseDate
     ? new Date(media.releaseDate).getFullYear()
@@ -214,12 +219,20 @@ export const MediaDetailsHeader = ({
               )}
 
               {isAuthenticated && (
-                <AddSessionDialog
-                  tmdbId={media.tmdbId}
-                  mediaType={isMovie ? 'movie' : 'tv'}
-                  mediaTitle={media.title}
-                  dict={dict.addSession}
-                />
+                <div className="flex items-center gap-2">
+                  <AddSessionDialog
+                    tmdbId={media.tmdbId}
+                    mediaType={isMovie ? 'movie' : 'tv'}
+                    mediaTitle={media.title}
+                    dict={dict.addSession}
+                  />
+                  <ToggleFavoriteButton
+                    tmdbId={media.tmdbId}
+                    type={isMovie ? 0 : 1}
+                    initialIsFavorite={isFavorite ?? false}
+                    dict={dict.favorite}
+                  />
+                </div>
               )}
             </div>
           </div>
