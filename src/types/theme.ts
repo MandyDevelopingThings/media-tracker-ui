@@ -1,6 +1,6 @@
 export type ThemeVariant = 'dark' | 'light';
 
-export type ThemeId = 'neon-green';
+export type ThemeId = 'neon-green' | 'synthwave';
 
 export type Theme = Readonly<{
   id: ThemeId;

@@ -24,15 +24,17 @@ if (!API_BASE_URL) {
 // Helpers internos
 // ---------------------------------------------------------------------------
 
-const buildHeaders = async (): Promise<Record<string, string>> => {
+const buildHeaders = async (isFormData = false): Promise<Record<string, string>> => {
   const cookieStore = await cookies();
   const allCookies = cookieStore.getAll();
   const cookieHeader = allCookies.map((c) => `${c.name}=${c.value}`).join("; ");
   const locale = cookieStore.get(LOCALE_COOKIE)?.value;
 
-  const headers: Record<string, string> = {
-    "Content-Type": "application/json",
-  };
+  const headers: Record<string, string> = {};
+
+  if (!isFormData) {
+    headers["Content-Type"] = "application/json";
+  }
 
   if (cookieHeader) {
     headers["Cookie"] = cookieHeader;
@@ -216,13 +218,14 @@ export const api = {
     const timeoutId = setTimeout(() => controller.abort(), TIMEOUT_MS);
 
     try {
-      const headers = await buildHeaders();
+      const isFormData = body instanceof FormData;
+      const headers = await buildHeaders(isFormData);
 
       const response = await fetch(`${API_BASE_URL}${path}`, {
         method,
         signal: controller.signal,
         headers,
-        body: body !== undefined ? JSON.stringify(body) : undefined,
+        body: isFormData ? (body as FormData) : (body !== undefined ? JSON.stringify(body) : undefined),
         // Comandos nunca devem ser cacheados.
         cache: "no-store",
       });

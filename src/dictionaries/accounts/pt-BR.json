@@ -49,5 +49,34 @@
     "invalidCredentials": "Usuário ou senha inválidos.",
     "passwordMismatch": "As senhas não coincidem.",
     "generic": "Algo deu errado. Tente novamente."
+  },
+  "settings": {
+    "pageTitle": "Configurações | MediaTracker",
+    "title": "Configurações",
+    "appearance": {
+      "title": "Aparência",
+      "description": "Personalize o idioma e o tema da sua interface.",
+      "language": "Idioma",
+      "theme": "Tema",
+      "light": "Claro",
+      "dark": "Escuro",
+      "themeColor": "Cor do Tema",
+      "themeColorDesc": "Selecione a cor de destaque da interface.",
+      "themeDesc": "Selecione o modo claro ou escuro.",
+      "languageDesc": "Selecione o idioma da aplicação."
+    },
+    "profile": {
+      "title": "Perfil",
+      "description": "Gerencie suas informações públicas.",
+      "profileAndCover": "Fotos de Perfil e Capa",
+      "changeCover": "Alterar Capa",
+      "displayName": "Nome de Exibição",
+      "displayNamePlaceholder": "Seu nome",
+      "bio": "Biografia",
+      "bioPlaceholder": "Fale um pouco sobre você...",
+      "save": "Salvar alterações",
+      "saving": "Salvando...",
+      "success": "Perfil atualizado com sucesso!"
+    }
   }
 }

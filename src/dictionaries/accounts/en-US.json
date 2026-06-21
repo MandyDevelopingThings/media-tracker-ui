@@ -49,5 +49,34 @@
     "invalidCredentials": "Invalid username or password.",
     "passwordMismatch": "Passwords do not match.",
     "generic": "Something went wrong. Please try again."
+  },
+  "settings": {
+    "pageTitle": "Settings | MediaTracker",
+    "title": "Settings",
+    "appearance": {
+      "title": "Appearance",
+      "description": "Customize your interface language and theme.",
+      "language": "Language",
+      "theme": "Theme",
+      "light": "Light",
+      "dark": "Dark",
+      "themeColor": "Theme Color",
+      "themeColorDesc": "Select the interface accent color.",
+      "themeDesc": "Select the light or dark mode.",
+      "languageDesc": "Select the application language."
+    },
+    "profile": {
+      "title": "Profile",
+      "description": "Manage your public information.",
+      "profileAndCover": "Profile and Cover Photos",
+      "changeCover": "Change Cover",
+      "displayName": "Display Name",
+      "displayNamePlaceholder": "Your name",
+      "bio": "Bio",
+      "bioPlaceholder": "Tell us a bit about yourself...",
+      "save": "Save changes",
+      "saving": "Saving...",
+      "success": "Profile updated successfully!"
+    }
   }
 }

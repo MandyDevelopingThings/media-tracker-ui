@@ -39,3 +39,10 @@ export type CurrentUserDto = Readonly<{
   id: string;
   userName: string;
 }>;
+
+export const UpdateProfileSchema = z.object({
+  displayName: z.string().max(50, "Max 50 characters").nullable().optional(),
+  bio: z.string().max(500, "Max 500 characters").nullable().optional(),
+});
+
+export type UpdateProfilePayload = z.infer<typeof UpdateProfileSchema>;

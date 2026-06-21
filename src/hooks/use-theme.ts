@@ -36,7 +36,9 @@ const readStoredTheme = (): ResolvedTheme | null => {
     const match = document.cookie.match(new RegExp(`(^| )${THEME_STORAGE_KEY}=([^;]+)`));
     if (match) {
       const stored = match[2];
-      if (stored === 'neon-green-dark' || stored === 'neon-green-light') {
+      const parts = stored.split('-');
+      const variant = parts.pop();
+      if (variant === 'dark' || variant === 'light') {
         return stored as ResolvedTheme;
       }
     }

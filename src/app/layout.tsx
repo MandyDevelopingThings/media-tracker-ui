@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import { THEME_STORAGE_KEY } from "@/lib/theme";
+import { THEME_STORAGE_KEY, resolveTheme, THEME_IDS } from "@/lib/theme";
 import { cookies } from "next/headers";
 import { isValidLocale, DEFAULT_LOCALE } from "@/lib/i18n-config";
 import { Navbar } from "@/components/navbar/navbar";
@@ -24,12 +24,14 @@ export const metadata: Metadata = {
   description: "Acompanhe filmes, séries e muito mais.",
 };
 
+const validThemes = THEME_IDS.flatMap(id => [`${id}-dark`, `${id}-light`]);
+
 const themeInitScript = `
 (function () {
   var key = "${THEME_STORAGE_KEY}";
   var match = document.cookie.match(new RegExp("(^| )" + key + "=([^;]+)"));
   var stored = match ? match[2] : null;
-  var valid = ["neon-green-dark", "neon-green-light"];
+  var valid = ${JSON.stringify(validThemes)};
   if (valid.indexOf(stored) === -1) {
     var resolved = window.matchMedia("(prefers-color-scheme: dark)").matches ? "neon-green-dark" : "neon-green-light";
     document.documentElement.setAttribute("data-theme", resolved);
@@ -52,7 +54,7 @@ export default async function RootLayout({
   const locale = isValidLocale(rawLocale) ? rawLocale : DEFAULT_LOCALE;
 
   const themeCookie = cookieStore.get(THEME_STORAGE_KEY)?.value;
-  const initialTheme = (themeCookie === "neon-green-dark" || themeCookie === "neon-green-light")
+  const initialTheme = themeCookie && validThemes.includes(themeCookie)
     ? themeCookie
     : null;
 
