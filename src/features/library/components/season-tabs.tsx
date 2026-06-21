@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useState, useTransition } from 'react';
+import { useCallback, useEffect, useState, useTransition } from 'react';
 import { cn } from '@/lib/utils';
 import { Loader2 } from 'lucide-react';
 import { getSeasonDetailsAction } from '../actions/get-season-details';
@@ -62,6 +62,10 @@ export const SeasonTabs = ({
   const [localWatchedEpisodes, setLocalWatchedEpisodes] = useState<
     Record<number, number[]>
   >(watchedEpisodes ?? {});
+
+  useEffect(() => {
+    setLocalWatchedEpisodes(watchedEpisodes ?? {});
+  }, [watchedEpisodes]);
 
   const handleSeasonSelect = (seasonNumber: number) => {
     setError(null);

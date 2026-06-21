@@ -32,6 +32,7 @@ type AddSessionDialogProps = {
     stoppedAtEpisode: string;
     save: string;
     autoAddHint: string;
+    mutuallyExclusiveHint: string;
   };
 };
 
@@ -49,8 +50,10 @@ export const AddSessionDialog = ({
   const [state, formAction, isPending] = useActionState(action, initialState);
 
   const [finishedAtValue, setFinishedAtValue] = useState('');
+  const [stoppedSeason, setStoppedSeason] = useState('');
+  const [stoppedEpisode, setStoppedEpisode] = useState('');
 
-  const showStoppedAt = mediaType === 'tv' && finishedAtValue === '';
+  const hasStoppedAt = stoppedSeason !== '' || stoppedEpisode !== '';
 
   useEffect(() => {
     if (!state.isSuccess) return;
@@ -60,7 +63,11 @@ export const AddSessionDialog = ({
 
   const handleOpenChange = (next: boolean) => {
     setOpen(next);
-    if (!next) setFinishedAtValue('');
+    if (!next) {
+      setFinishedAtValue('');
+      setStoppedSeason('');
+      setStoppedEpisode('');
+    }
   };
 
   return (
@@ -146,7 +153,8 @@ export const AddSessionDialog = ({
               max={new Date().toISOString().split('T')[0]}
               value={finishedAtValue}
               onChange={(e) => setFinishedAtValue(e.target.value)}
-              className="w-full rounded-lg border border-border/40 bg-background px-3 py-2.5 text-sm text-foreground [color-scheme:dark] focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/60"
+              disabled={hasStoppedAt}
+              className="w-full rounded-lg border border-border/40 bg-background px-3 py-2.5 text-sm text-foreground [color-scheme:dark] focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/60 disabled:opacity-50 disabled:cursor-not-allowed"
             />
             {state.errors?.finishedAt && (
               <span className="text-xs text-destructive">
@@ -155,51 +163,64 @@ export const AddSessionDialog = ({
             )}
           </div>
 
-          {/* stoppedAt — TV only, hidden when finishedAt is filled */}
-          {showStoppedAt && (
-            <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-2">
-                <Label
-                  htmlFor={`add-session-stoppedSeason-${tmdbId}`}
-                  className="text-xs font-semibold uppercase tracking-wider text-muted-foreground"
-                >
-                  {dict.stoppedAtSeason}
-                </Label>
-                <HarmonicNumberInput
-                  id={`add-session-stoppedSeason-${tmdbId}`}
-                  name="stoppedAtSeasonNumber"
-                  min={0}
-                  placeholder="—"
-                />
-                {state.errors?.stoppedAtSeasonNumber && (
-                  <span className="text-xs text-destructive">
-                    {state.errors.stoppedAtSeasonNumber[0]}
-                  </span>
-                )}
+          {/* stoppedAt — TV only */}
+          {mediaType === 'tv' && (
+            <div className="space-y-4">
+              <div className="flex gap-2.5 rounded-lg border border-primary/20 bg-primary/5 px-3.5 py-3 text-xs text-primary/80">
+                <Info className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+                <span>{dict.mutuallyExclusiveHint}</span>
               </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-2">
+                  <Label
+                    htmlFor={`add-session-stoppedSeason-${tmdbId}`}
+                    className="text-xs font-semibold uppercase tracking-wider text-muted-foreground"
+                  >
+                    {dict.stoppedAtSeason}
+                  </Label>
+                  <HarmonicNumberInput
+                    id={`add-session-stoppedSeason-${tmdbId}`}
+                    name="stoppedAtSeasonNumber"
+                    min={0}
+                    placeholder="—"
+                    value={stoppedSeason}
+                    onChange={(e) => setStoppedSeason(e.target.value)}
+                    disabled={finishedAtValue !== ''}
+                    className={finishedAtValue !== '' ? "opacity-50 cursor-not-allowed" : ""}
+                  />
+                  {state.errors?.stoppedAtSeasonNumber && (
+                    <span className="text-xs text-destructive">
+                      {state.errors.stoppedAtSeasonNumber[0]}
+                    </span>
+                  )}
+                </div>
 
-              <div className="space-y-2">
-                <Label
-                  htmlFor={`add-session-stoppedEpisode-${tmdbId}`}
-                  className="text-xs font-semibold uppercase tracking-wider text-muted-foreground"
-                >
-                  {dict.stoppedAtEpisode}
-                </Label>
-                <HarmonicNumberInput
-                  id={`add-session-stoppedEpisode-${tmdbId}`}
-                  name="stoppedAtEpisodeNumber"
-                  min={1}
-                  placeholder="—"
-                />
-                {state.errors?.stoppedAtEpisodeNumber && (
-                  <span className="text-xs text-destructive">
-                    {state.errors.stoppedAtEpisodeNumber[0]}
-                  </span>
-                )}
+                <div className="space-y-2">
+                  <Label
+                    htmlFor={`add-session-stoppedEpisode-${tmdbId}`}
+                    className="text-xs font-semibold uppercase tracking-wider text-muted-foreground"
+                  >
+                    {dict.stoppedAtEpisode}
+                  </Label>
+                  <HarmonicNumberInput
+                    id={`add-session-stoppedEpisode-${tmdbId}`}
+                    name="stoppedAtEpisodeNumber"
+                    min={1}
+                    placeholder="—"
+                    value={stoppedEpisode}
+                    onChange={(e) => setStoppedEpisode(e.target.value)}
+                    disabled={finishedAtValue !== ''}
+                    className={finishedAtValue !== '' ? "opacity-50 cursor-not-allowed" : ""}
+                  />
+                  {state.errors?.stoppedAtEpisodeNumber && (
+                    <span className="text-xs text-destructive">
+                      {state.errors.stoppedAtEpisodeNumber[0]}
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
           )}
-
           <button
             type="submit"
             disabled={isPending}

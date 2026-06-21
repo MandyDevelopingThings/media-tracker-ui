@@ -45,6 +45,14 @@ export const addTvSessionSchema = z
       }
     }
 
+    if (data.finishedAt && (data.stoppedAtSeasonNumber !== undefined || data.stoppedAtEpisodeNumber !== undefined)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'A data de término e a marcação de parada (temporada/episódio) não podem ser enviadas juntas.',
+        path: ['finishedAt'],
+      });
+    }
+
     if (data.stoppedAtSeasonNumber !== undefined && data.stoppedAtEpisodeNumber === undefined) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,

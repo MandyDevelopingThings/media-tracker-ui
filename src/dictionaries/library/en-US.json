@@ -69,7 +69,8 @@
       "stoppedAtSeason": "Stopped at season",
       "stoppedAtEpisode": "Stopped at episode",
       "save": "Save",
-      "autoAddHint": "If this title isn't on your list yet, it will be added automatically when you log a session."
+      "autoAddHint": "If this title isn't on your list yet, it will be added automatically when you log a session.",
+      "mutuallyExclusiveHint": "Finished date and stop point cannot be filled together. Fill one and the other will be disabled."
     },
     "favorite": {
       "add": "Add to Favorites",

@@ -40,6 +40,7 @@ export type ReviewDto = Readonly<{
 export type WatchSessionDto = Readonly<{
   id: string;
   isActive: boolean;
+  startedAt: string;
   createdAt: string;
 }>;
 

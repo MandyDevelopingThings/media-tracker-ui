@@ -39,6 +39,12 @@ export const addMovieSessionAction = async (
   const result = await addMovieSession(validated.data);
 
   if (!result.success) {
+    if (result.status === 409) {
+      return {
+        isSuccess: false,
+        message: 'Você já possui uma sessão ativa para esta mídia. Encerre-a antes de iniciar uma nova.',
+      };
+    }
     return {
       isSuccess: false,
       message:

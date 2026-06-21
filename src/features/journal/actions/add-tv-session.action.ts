@@ -35,6 +35,11 @@ export const addTvSessionAction = async (
     stoppedAtEpisodeNumber: toInt('stoppedAtEpisodeNumber'),
   };
 
+  if (rawData.finishedAt) {
+    rawData.stoppedAtSeasonNumber = undefined;
+    rawData.stoppedAtEpisodeNumber = undefined;
+  }
+
   const validated = addTvSessionSchema.safeParse(rawData);
 
   if (!validated.success) {
@@ -48,6 +53,13 @@ export const addTvSessionAction = async (
   const result = await addTvSession(validated.data);
 
   if (!result.success) {
+    if (result.status === 409) {
+      return {
+        isSuccess: false,
+        message: 'Você já possui uma sessão ativa para esta mídia. Encerre-a antes de iniciar uma nova.',
+      };
+    }
+    
     return {
       isSuccess: false,
       message:
@@ -61,6 +73,6 @@ export const addTvSessionAction = async (
 
   return {
     isSuccess: true,
-    message: 'Sessão registrada com sucesso!',
+    message: `Sessão registrada com sucesso! ${result.data.episodesSynced} episódios marcados como assistidos.`,
   };
 };

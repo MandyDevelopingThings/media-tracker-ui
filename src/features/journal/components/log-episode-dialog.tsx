@@ -138,11 +138,12 @@ export const LogEpisodeDialog = ({
                 name="watchSessionId"
                 id="watchSessionId"
                 className="w-full bg-background border border-border/40 rounded-lg px-3 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/60"
+                defaultValue={sessions.find(s => s.isActive)?.id || ''}
                 required
               >
                 {sessions.map((s) => (
                   <option key={s.id} value={s.id}>
-                    {new Date(s.createdAt).toLocaleDateString()} {s.isActive ? '(Ativa)' : ''}
+                    Iniciada em: {new Date(s.startedAt).toLocaleDateString()} {s.isActive ? '(Ativa)' : ''}
                   </option>
                 ))}
               </select>

@@ -69,7 +69,8 @@
       "stoppedAtSeason": "Parou na temporada",
       "stoppedAtEpisode": "Parou no episódio",
       "save": "Salvar",
-      "autoAddHint": "Se você ainda não tem esta obra na sua lista, ela será adicionada automaticamente ao registrar uma sessão."
+      "autoAddHint": "Se você ainda não tem esta obra na sua lista, ela será adicionada automaticamente ao registrar uma sessão.",
+      "mutuallyExclusiveHint": "Data de término e ponto de parada não podem ser preenchidos juntos. Preencha um e o outro será desativado."
     },
     "favorite": {
       "add": "Adicionar aos Favoritos",
