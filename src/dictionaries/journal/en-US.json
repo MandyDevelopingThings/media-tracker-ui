@@ -59,6 +59,28 @@
       "reviewsWritten": "Reviews Written"
     },
     "notFound": "Profile not found.",
-    "editProfile": "Edit Profile"
+    "editProfile": "Edit Profile",
+    "reviews": {
+      "emptyState": "No reviews found.",
+      "filters": {
+        "title": "Filters",
+        "type": "Type",
+        "movie": "Movie",
+        "tv": "TV Show",
+        "all": "All",
+        "minRating": "Min Rating",
+        "maxRating": "Max Rating",
+        "hasSpoilers": "Has Spoilers",
+        "orderBy": "Order By",
+        "date": "Date",
+        "rating": "Rating",
+        "asc": "Ascending",
+        "desc": "Descending",
+        "clear": "Clear Filters",
+        "apply": "Apply Filters",
+        "yes": "Yes",
+        "no": "No"
+      }
+    }
   }
 }

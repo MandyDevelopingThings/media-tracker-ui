@@ -13,7 +13,7 @@ export type FavoriteMediaDto = Readonly<{
   addedAt: string;
 }>;
 
-export type LastReviewDto = Readonly<{
+export type ProfileReviewDto = Readonly<{
   tmdbId: number;
   type: number;
   reviewTitle: string | null;
@@ -24,6 +24,8 @@ export type LastReviewDto = Readonly<{
   containsSpoilers: boolean;
   createdAt: string;
 }>;
+
+export type LastReviewDto = ProfileReviewDto;
 
 export type UserJournalProfileDto = Readonly<{
   statistics: UserStatisticsDto;

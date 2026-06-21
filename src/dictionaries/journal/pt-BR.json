@@ -59,6 +59,28 @@
       "reviewsWritten": "Reviews Escritos"
     },
     "notFound": "Perfil não encontrado.",
-    "editProfile": "Editar Perfil"
+    "editProfile": "Editar Perfil",
+    "reviews": {
+      "emptyState": "Nenhuma avaliação encontrada.",
+      "filters": {
+        "title": "Filtros",
+        "type": "Tipo",
+        "movie": "Filme",
+        "tv": "Série",
+        "all": "Todos",
+        "minRating": "Nota Mínima",
+        "maxRating": "Nota Máxima",
+        "hasSpoilers": "Possui Spoilers",
+        "orderBy": "Ordenar por",
+        "date": "Data",
+        "rating": "Nota",
+        "asc": "Crescente",
+        "desc": "Decrescente",
+        "clear": "Limpar Filtros",
+        "apply": "Aplicar Filtros",
+        "yes": "Sim",
+        "no": "Não"
+      }
+    }
   }
 }
