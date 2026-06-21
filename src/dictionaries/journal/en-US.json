@@ -129,5 +129,16 @@
       "noRating": "—",
       "episodes": "ep"
     }
+  },
+  "episodeEntries": {
+    "title": "Episode History",
+    "entriesLabel": "Entries",
+    "deleteEntrySuccess": "Entry deleted",
+    "rateSuccess": "Rating saved",
+    "noEntries": "No entries found",
+    "deleteConfirmTitle": "Delete entry?",
+    "deleteConfirmDesc": "Are you sure you want to remove this entry from your history?",
+    "confirmDelete": "Delete",
+    "cancel": "Cancel"
   }
 }

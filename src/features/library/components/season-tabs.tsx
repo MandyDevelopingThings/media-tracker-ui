@@ -23,6 +23,7 @@ type SeasonTabsProps = {
     markSeason: string;
     logSeasonHint: string;
   };
+  journalDict?: any;
   watchedEpisodes?: Record<number, number[]>;
 };
 
@@ -38,6 +39,7 @@ export const SeasonTabs = ({
   seasons,
   isAuthenticated,
   dict,
+  journalDict,
   watchedEpisodes,
 }: SeasonTabsProps) => {
   const regularSeasons = seasons.filter((s) => s.seasonNumber !== 0);
@@ -190,6 +192,7 @@ export const SeasonTabs = ({
                   isAuthenticated={isAuthenticated}
                   addWatchedLabel={dict.addWatched}
                   episodeLabel={dict.episode}
+                  journalDict={journalDict}
                   isWatched={isWatched}
                 />
               );

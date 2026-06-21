@@ -19,6 +19,7 @@ type MediaDetailsHeaderProps = {
   dict: DetailsDictionary & {
     favorite: { add: string; remove: string };
   };
+  journalDict?: any;
   watchedEpisodes?: Record<number, number[]>;
   isFavorite?: boolean;
 };
@@ -110,6 +111,7 @@ export const MediaDetailsHeader = ({
   media,
   isAuthenticated,
   dict,
+  journalDict,
   watchedEpisodes,
   isFavorite,
 }: MediaDetailsHeaderProps) => {
@@ -292,6 +294,7 @@ export const MediaDetailsHeader = ({
                   seasons={media.seasons}
                   isAuthenticated={isAuthenticated}
                   dict={dict}
+                  journalDict={journalDict}
                   watchedEpisodes={watchedEpisodes}
                 />
               </SectionCard>

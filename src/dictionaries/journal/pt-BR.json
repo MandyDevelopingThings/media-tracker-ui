@@ -129,5 +129,16 @@
       "noRating": "—",
       "episodes": "ep"
     }
+  },
+  "episodeEntries": {
+    "title": "Histórico do Episódio",
+    "entriesLabel": "Registros",
+    "deleteEntrySuccess": "Registro excluído",
+    "rateSuccess": "Nota salva",
+    "noEntries": "Nenhum registro encontrado",
+    "deleteConfirmTitle": "Excluir visualização?",
+    "deleteConfirmDesc": "Tem certeza que deseja remover esta visualização do seu histórico?",
+    "confirmDelete": "Excluir",
+    "cancel": "Cancelar"
   }
 }

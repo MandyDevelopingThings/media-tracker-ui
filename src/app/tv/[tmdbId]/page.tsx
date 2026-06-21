@@ -51,9 +51,10 @@ export default async function TvPage({ params, searchParams }: TvPageProps) {
   const rawLocale = cookieStore.get('NEXT_LOCALE')?.value;
   const locale = isValidLocale(rawLocale) ? rawLocale : DEFAULT_LOCALE;
 
-  const [result, dict, authenticated] = await Promise.all([
+  const [result, dict, journalDict, authenticated] = await Promise.all([
     getTvDetails(parsed.data),
     getDictionary('library', locale),
+    getDictionary('journal', locale),
     isAuthenticated(),
   ]);
 
@@ -89,6 +90,7 @@ export default async function TvPage({ params, searchParams }: TvPageProps) {
           media={result.data}
           isAuthenticated={authenticated}
           dict={dict.details as any}
+          journalDict={journalDict}
           watchedEpisodes={watchedEpisodes}
           isFavorite={isFavorite}
         />

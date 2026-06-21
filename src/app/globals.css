@@ -301,3 +301,36 @@
     @apply font-sans;
   }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SONNER TOASTOVERRIDES (richColors theme matching)
+   ───────────────────────────────────────────────────────────────────────────── */
+[data-sonner-toast][data-type="success"] {
+  background: var(--primary) !important;
+  border-color: var(--primary) !important;
+  color: var(--primary-foreground) !important;
+}
+
+[data-sonner-toast][data-type="success"] [data-icon] {
+  color: var(--primary-foreground) !important;
+}
+
+[data-sonner-toast][data-type="warning"] {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: var(--accent-foreground) !important;
+}
+
+[data-sonner-toast][data-type="warning"] [data-icon] {
+  color: var(--accent-foreground) !important;
+}
+
+[data-sonner-toast][data-type="error"] {
+  background: var(--destructive) !important;
+  border-color: var(--destructive) !important;
+  color: var(--destructive-foreground) !important;
+}
+
+[data-sonner-toast][data-type="error"] [data-icon] {
+  color: var(--destructive-foreground) !important;
+}

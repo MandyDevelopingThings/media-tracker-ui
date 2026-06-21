@@ -6,6 +6,7 @@ import { THEME_STORAGE_KEY, resolveTheme, THEME_IDS } from "@/lib/theme";
 import { cookies } from "next/headers";
 import { isValidLocale, DEFAULT_LOCALE } from "@/lib/i18n-config";
 import { Navbar } from "@/components/navbar/navbar";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -78,6 +79,7 @@ export default async function RootLayout({
       <body className="min-h-full flex flex-col">
         <Navbar />
         <main className="flex flex-1 flex-col">{children}</main>
+        <Toaster />
       </body>
     </html>
   );
