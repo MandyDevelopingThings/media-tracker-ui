@@ -90,6 +90,12 @@
     "switchToGrid": "Visualização em grade",
     "switchToGrouped": "Visualização em lista",
     "emptyState": "Nenhum título encontrado",
+    "table": {
+      "name": "Nome",
+      "type": "Tipo",
+      "episodes": "Ep.",
+      "date": "Data"
+    },
     "filters": {
       "title": "Filtros",
       "status": "Status",
@@ -108,7 +114,7 @@
     "orderBy": {
       "title": "Título",
       "rating": "Nota",
-      "statusUpdatedAt": "Última atualização",
+      "statusUpdatedAt": "Última atualização de status",
       "createdAt": "Data de adição",
       "updatedAt": "Atualizado em"
     },

@@ -87,9 +87,15 @@
     "title": "My List",
     "totalItems": "{count} titles",
     "search": "Search titles...",
-    "switchToGrid": "Grid view",
-    "switchToGrouped": "List view",
+    "switchToGrid": "Grid View",
+    "switchToGrouped": "List View",
     "emptyState": "No titles found",
+    "table": {
+      "name": "Name",
+      "type": "Type",
+      "episodes": "Ep.",
+      "date": "Date"
+    },
     "filters": {
       "title": "Filters",
       "status": "Status",
@@ -108,7 +114,7 @@
     "orderBy": {
       "title": "Title",
       "rating": "Rating",
-      "statusUpdatedAt": "Last Updated",
+      "statusUpdatedAt": "Status Last Updated",
       "createdAt": "Date Added",
       "updatedAt": "Updated At"
     },

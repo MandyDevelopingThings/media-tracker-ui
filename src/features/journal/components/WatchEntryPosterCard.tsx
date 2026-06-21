@@ -4,6 +4,7 @@ import { Heart, Star, Clapperboard } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { WATCH_STATUS } from '@/features/journal/types/watch-entry';
 import type { WatchEntryDto, WatchStatus } from '@/features/journal/types/watch-entry';
+import { InlineRatingEditor } from './InlineRatingEditor';
 
 const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p/w342';
 
@@ -28,10 +29,10 @@ export const WatchEntryPosterCard = ({ item, dict }: WatchEntryPosterCardProps) 
   const showEpisodes = item.type === 1 && item.watchedEpisodesCount > 0;
 
   return (
-    <Link
-      href={href}
+    <div
       className="group relative block overflow-hidden rounded-lg border border-border bg-muted aspect-[2/3] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
+      <Link href={href} className="absolute inset-0 z-0" aria-label={item.title} />
       {item.posterPath ? (
         <Image
           src={`${TMDB_IMAGE_BASE}${item.posterPath}`}
@@ -67,11 +68,18 @@ export const WatchEntryPosterCard = ({ item, dict }: WatchEntryPosterCardProps) 
       )}
 
       {/* Bottom info strip — always visible */}
-      <div className="absolute bottom-0 left-0 right-0 flex items-center justify-between px-2 py-1.5 backdrop-blur-sm bg-black/65">
-        <span className="flex items-center gap-1 text-[10px] font-medium text-white/90 tabular-nums">
-          <Star className="h-2.5 w-2.5 fill-amber-400 text-amber-400 shrink-0" />
-          {item.rating !== null ? item.rating.toFixed(1) : dict.noRating}
-        </span>
+      <div className="absolute bottom-0 left-0 right-0 flex items-center justify-between px-2 py-1.5 backdrop-blur-sm bg-black/65 z-10">
+        <InlineRatingEditor
+          tmdbId={item.tmdbId}
+          type={item.type}
+          currentRating={item.rating}
+          userId={item.userId}
+        >
+          <span className="flex items-center gap-1 text-[10px] font-medium text-white/90 tabular-nums">
+            <Star className="h-2.5 w-2.5 fill-amber-400 text-amber-400 shrink-0" />
+            {item.rating !== null ? item.rating : dict.noRating}
+          </span>
+        </InlineRatingEditor>
         {showEpisodes && (
           <span className="text-[10px] font-medium text-white/70 tabular-nums">
             {item.watchedEpisodesCount} {dict.episodes}
@@ -86,6 +94,6 @@ export const WatchEntryPosterCard = ({ item, dict }: WatchEntryPosterCardProps) 
           {item.title}
         </p>
       </div>
-    </Link>
+    </div>
   );
 };

@@ -2,12 +2,12 @@
 
 import { useState, useTransition } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
-import { ChevronDown, Clapperboard, Star } from 'lucide-react';
+import { ChevronDown, Clapperboard, Star, HelpCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { WATCH_STATUS } from '@/features/journal/types/watch-entry';
 import type { WatchEntryDto, WatchStatus } from '@/features/journal/types/watch-entry';
+import { InlineRatingEditor } from './InlineRatingEditor';
 
 const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p/w92';
 
@@ -35,6 +35,12 @@ type GroupedDict = {
     unspecified: string;
   };
   emptyState: string;
+  table: {
+    name: string;
+    type: string;
+    episodes: string;
+    date: string;
+  };
   card: {
     noRating: string;
     episodes: string;
@@ -80,6 +86,7 @@ const WatchEntryRowItem = ({
   item: WatchEntryDto;
   dict: GroupedDict['card'];
 }) => {
+  const router = useRouter();
   const href = item.type === 0 ? `/movie/${item.tmdbId}` : `/tv/${item.tmdbId}`;
   const showEpisodes = item.type === 1 && item.watchedEpisodesCount > 0;
   const date = new Date(item.statusUpdatedAt).toLocaleDateString('pt-BR', {
@@ -88,9 +95,9 @@ const WatchEntryRowItem = ({
   });
 
   return (
-    <Link
-      href={href}
-      className="grid grid-cols-[40px_1fr_80px_80px_80px_72px] items-center gap-3 px-3 py-2 rounded-md hover:bg-accent/50 transition-colors group"
+    <div
+      onClick={() => router.push(href)}
+      className="grid grid-cols-[40px_1fr_80px_80px_80px_72px] items-center gap-3 px-3 py-2 rounded-md hover:bg-accent/50 transition-colors group cursor-pointer"
     >
       {/* Thumbnail */}
       <div className="relative w-10 h-[54px] shrink-0 overflow-hidden rounded-sm bg-muted">
@@ -121,10 +128,18 @@ const WatchEntryRowItem = ({
       </span>
 
       {/* Rating */}
-      <span className="flex items-center gap-1 text-xs text-muted-foreground tabular-nums">
-        <Star className="h-3 w-3 fill-amber-400 text-amber-400 shrink-0" />
-        {item.rating !== null ? item.rating.toFixed(1) : dict.noRating}
-      </span>
+      <InlineRatingEditor
+        tmdbId={item.tmdbId}
+        type={item.type}
+        currentRating={item.rating}
+        userId={item.userId}
+        className="w-fit"
+      >
+        <span className="flex items-center gap-1 text-xs text-muted-foreground tabular-nums">
+          <Star className="h-3 w-3 fill-amber-400 text-amber-400 shrink-0" />
+          {item.rating !== null ? item.rating : dict.noRating}
+        </span>
+      </InlineRatingEditor>
 
       {/* Episodes */}
       <span className="text-xs text-muted-foreground tabular-nums">
@@ -133,7 +148,7 @@ const WatchEntryRowItem = ({
 
       {/* Date */}
       <span className="text-xs text-muted-foreground text-right">{date}</span>
-    </Link>
+    </div>
   );
 };
 
@@ -252,10 +267,25 @@ export const WatchEntryGroupedView = ({ items, dict }: WatchEntryGroupedViewProp
 
       {/* Table column headers */}
       <div className="grid grid-cols-[40px_1fr_80px_80px_80px_72px] gap-3 px-3 pb-1 border-b border-border/30">
-        {['', dict.filters.all, 'Tipo', dict.orderBy.rating, 'Ep.', 'Data'].map((label, i) => (
-          <span key={i} className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
-            {label}
-          </span>
+        {[
+          { label: '' },
+          { label: dict.table.name },
+          { label: dict.table.type },
+          { label: dict.orderBy.rating },
+          { label: dict.table.episodes },
+          { label: dict.table.date, title: dict.orderBy.statusUpdatedAt },
+        ].map(({ label, title }, i) => (
+          <div
+            key={i}
+            title={title}
+            className={cn(
+              "flex items-center gap-1 text-[10px] uppercase tracking-wider text-muted-foreground font-semibold",
+              title && "cursor-help"
+            )}
+          >
+            <span>{label}</span>
+            {title && <HelpCircle className="h-3 w-3 opacity-60 shrink-0" />}
+          </div>
         ))}
       </div>
 

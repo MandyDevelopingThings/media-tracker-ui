@@ -82,6 +82,7 @@ export default async function ProfileListPage({ params, searchParams }: ProfileL
       orderBy: listDict.orderBy,
       status: listDict.status,
       emptyState: listDict.emptyState,
+      table: listDict.table,
       card: listDict.card,
     },
   };
