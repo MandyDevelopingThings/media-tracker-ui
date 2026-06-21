@@ -145,6 +145,7 @@ export const WatchEntryGroupedView = ({ items, dict }: WatchEntryGroupedViewProp
 
   const activeType  = searchParams.get('type') ?? '';
   const activeOrder = searchParams.get('orderBy') ?? 'StatusUpdatedAt';
+  const isAscending = searchParams.get('isAscendingOrder') === 'true';
 
   const [collapsed, setCollapsed] = useState<Partial<Record<WatchStatus, boolean>>>({
     [WATCH_STATUS.PlanToWatch]: true,
@@ -217,6 +218,26 @@ export const WatchEntryGroupedView = ({ items, dict }: WatchEntryGroupedViewProp
               <option key={value} value={value}>{dict.orderBy[labelKey]}</option>
             ))}
           </select>
+          <div className="flex gap-1">
+            {[
+              { value: false, label: '↓' },
+              { value: true,  label: '↑' },
+            ].map(({ value, label }) => (
+              <button
+                key={String(value)}
+                onClick={() => updateParams({ isAscendingOrder: String(value) })}
+                className={cn(
+                  'px-2 py-1.5 rounded-md text-xs font-medium border transition-colors',
+                  isAscending === value
+                    ? 'bg-primary text-primary-foreground border-primary'
+                    : 'bg-transparent text-muted-foreground border-border hover:text-foreground',
+                )}
+                title={value ? 'Ascendente' : 'Descendente'}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
         </div>
 
         {(activeType || activeOrder !== 'StatusUpdatedAt') && (
