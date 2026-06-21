@@ -82,5 +82,46 @@
         "no": "Não"
       }
     }
+  },
+  "list": {
+    "title": "Minha Lista",
+    "totalItems": "{count} títulos",
+    "search": "Buscar títulos...",
+    "switchToGrid": "Visualização em grade",
+    "switchToGrouped": "Visualização em lista",
+    "emptyState": "Nenhum título encontrado",
+    "filters": {
+      "title": "Filtros",
+      "status": "Status",
+      "type": "Tipo",
+      "orderBy": "Ordenar por",
+      "all": "Todos",
+      "watching": "Assistindo",
+      "completed": "Concluído",
+      "dropped": "Abandonado",
+      "planToWatch": "Quero Assistir",
+      "unspecified": "Sem status",
+      "movie": "Filme",
+      "tv": "Série",
+      "clear": "Limpar filtros"
+    },
+    "orderBy": {
+      "title": "Título",
+      "rating": "Nota",
+      "statusUpdatedAt": "Última atualização",
+      "createdAt": "Data de adição",
+      "updatedAt": "Atualizado em"
+    },
+    "status": {
+      "watching": "Assistindo",
+      "completed": "Concluído",
+      "dropped": "Abandonado",
+      "planToWatch": "Quero Assistir",
+      "unspecified": "Sem status"
+    },
+    "card": {
+      "noRating": "—",
+      "episodes": "ep"
+    }
   }
 }

@@ -82,5 +82,46 @@
         "no": "No"
       }
     }
+  },
+  "list": {
+    "title": "My List",
+    "totalItems": "{count} titles",
+    "search": "Search titles...",
+    "switchToGrid": "Grid view",
+    "switchToGrouped": "List view",
+    "emptyState": "No titles found",
+    "filters": {
+      "title": "Filters",
+      "status": "Status",
+      "type": "Type",
+      "orderBy": "Sort By",
+      "all": "All",
+      "watching": "Watching",
+      "completed": "Completed",
+      "dropped": "Dropped",
+      "planToWatch": "Plan to Watch",
+      "unspecified": "Unspecified",
+      "movie": "Movie",
+      "tv": "TV Show",
+      "clear": "Clear filters"
+    },
+    "orderBy": {
+      "title": "Title",
+      "rating": "Rating",
+      "statusUpdatedAt": "Last Updated",
+      "createdAt": "Date Added",
+      "updatedAt": "Updated At"
+    },
+    "status": {
+      "watching": "Watching",
+      "completed": "Completed",
+      "dropped": "Dropped",
+      "planToWatch": "Plan to Watch",
+      "unspecified": "Unspecified"
+    },
+    "card": {
+      "noRating": "—",
+      "episodes": "ep"
+    }
   }
 }
