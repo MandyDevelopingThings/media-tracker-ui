@@ -76,5 +76,16 @@
       "add": "Adicionar aos Favoritos",
       "remove": "Remover dos Favoritos"
     }
+  },
+  "home": {
+    "featuredBadge": "Em Destaque",
+    "movie": "Filme",
+    "tvShow": "Série",
+    "viewDetails": "Ver Detalhes",
+    "topRated": "Top 5 da Comunidade",
+    "noPoster": "Sem poster",
+    "noFeatured": "Nenhum destaque disponível no momento.",
+    "errorTitle": "Erro ao carregar os dados",
+    "errorHint": "Não foi possível conectar ao servidor. Tente novamente mais tarde."
   }
 }

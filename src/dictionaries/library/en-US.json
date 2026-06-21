@@ -76,5 +76,16 @@
       "add": "Add to Favorites",
       "remove": "Remove from Favorites"
     }
+  },
+  "home": {
+    "featuredBadge": "Featured",
+    "movie": "Movie",
+    "tvShow": "TV Show",
+    "viewDetails": "View Details",
+    "topRated": "Community Top 5",
+    "noPoster": "No poster",
+    "noFeatured": "No featured media available at the moment.",
+    "errorTitle": "Error loading data",
+    "errorHint": "Could not connect to the server. Please try again later."
   }
 }
