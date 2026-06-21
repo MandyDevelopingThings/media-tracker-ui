@@ -72,23 +72,41 @@ export const useTheme = (): UseThemeReturn => {
     applyTheme(resolvedTheme);
   }, [resolvedTheme]);
 
+  useEffect(() => {
+    const handleThemeChange = (e: Event) => {
+      const customEvent = e as CustomEvent<ResolvedTheme>;
+      setResolvedTheme(customEvent.detail);
+    };
+    window.addEventListener('mt-theme-change', handleThemeChange);
+    return () => window.removeEventListener('mt-theme-change', handleThemeChange);
+  }, []);
+
   const setTheme = useCallback((next: Theme): void => {
     const resolved: ResolvedTheme = `${next.id}-${next.variant}`;
     setStoredTheme(resolved);
     setResolvedTheme(resolved);
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('mt-theme-change', { detail: resolved }));
+    }
   }, []);
 
   const toggleVariant = useCallback((): void => {
-    setResolvedTheme((prev) => {
-      const current = parseResolved(prev);
-      const next: Theme = {
-        id: current.id,
-        variant: current.variant === 'dark' ? 'light' : 'dark',
-      };
-      const resolved: ResolvedTheme = `${next.id}-${next.variant}`;
-      setStoredTheme(resolved);
-      return resolved;
-    });
+    const currentThemeAttr = typeof document !== 'undefined' ? document.documentElement.getAttribute('data-theme') as ResolvedTheme | null : null;
+    const actualCurrent = currentThemeAttr || readStoredTheme() || `${DEFAULT_THEME.id}-${DEFAULT_THEME.variant}`;
+    
+    const current = parseResolved(actualCurrent);
+    const next: Theme = {
+      id: current.id,
+      variant: current.variant === 'dark' ? 'light' : 'dark',
+    };
+    const resolved: ResolvedTheme = `${next.id}-${next.variant}`;
+    
+    setStoredTheme(resolved);
+    setResolvedTheme(resolved);
+    
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('mt-theme-change', { detail: resolved }));
+    }
   }, []);
 
   return { theme: parseResolved(resolvedTheme), resolvedTheme, setTheme, toggleVariant };
