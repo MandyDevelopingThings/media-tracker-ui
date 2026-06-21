@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState, useEffect, useState } from 'react';
+import { useActionState, useEffect, useState, useTransition } from 'react';
 import { Loader2, Plus, Info } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
@@ -18,6 +18,7 @@ import {
   type AddSessionState,
 } from '../actions/add-movie-session.action';
 import { addTvSessionAction } from '../actions/add-tv-session.action';
+import { useTvWatchOptional } from '@/features/library/components/tv-watch-context';
 
 type AddSessionDialogProps = {
   tmdbId: number;
@@ -45,9 +46,12 @@ export const AddSessionDialog = ({
   dict,
 }: AddSessionDialogProps) => {
   const [open, setOpen] = useState(false);
+  const [, startServerTransition] = useTransition();
 
   const action = mediaType === 'movie' ? addMovieSessionAction : addTvSessionAction;
   const [state, formAction, isPending] = useActionState(action, initialState);
+
+  const tvWatch = useTvWatchOptional();
 
   const [finishedAtValue, setFinishedAtValue] = useState('');
   const [stoppedSeason, setStoppedSeason] = useState('');
@@ -61,13 +65,39 @@ export const AddSessionDialog = ({
     setFinishedAtValue('');
   }, [state.isSuccess]);
 
+  const resetForm = () => {
+    setFinishedAtValue('');
+    setStoppedSeason('');
+    setStoppedEpisode('');
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+
+    if (tvWatch && mediaType === 'tv') {
+      const finishedAt = formData.get('finishedAt') as string | null;
+      const stoppedAtSeasonNumber = formData.get('stoppedAtSeasonNumber') as string | null;
+      const stoppedAtEpisodeNumber = formData.get('stoppedAtEpisodeNumber') as string | null;
+
+      tvWatch.addOptimisticSession({
+        finishedAt: finishedAt || undefined,
+        stoppedAtSeasonNumber: stoppedAtSeasonNumber ? parseInt(stoppedAtSeasonNumber, 10) : undefined,
+        stoppedAtEpisodeNumber: stoppedAtEpisodeNumber ? parseInt(stoppedAtEpisodeNumber, 10) : undefined,
+      });
+
+      setOpen(false);
+      resetForm();
+    }
+
+    startServerTransition(() => {
+      formAction(formData);
+    });
+  };
+
   const handleOpenChange = (next: boolean) => {
     setOpen(next);
-    if (!next) {
-      setFinishedAtValue('');
-      setStoppedSeason('');
-      setStoppedEpisode('');
-    }
+    if (!next) resetForm();
   };
 
   return (
@@ -100,7 +130,7 @@ export const AddSessionDialog = ({
           <DialogDescription>{mediaTitle}</DialogDescription>
         </DialogHeader>
 
-        <form action={formAction} className="space-y-5 pt-2">
+        <form onSubmit={handleSubmit} className="space-y-5 pt-2">
           <input type="hidden" name="tmdbId" value={tmdbId} />
 
           {/* Auto-add hint */}

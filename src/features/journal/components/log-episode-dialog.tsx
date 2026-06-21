@@ -14,6 +14,7 @@ import {
 import { Label } from '@/components/ui/label';
 import { logEpisodeAction, type LogEpisodeState } from '../actions/log-episode.action';
 import { getWatchSessionsAction } from '../actions/get-watch-sessions.action';
+import { useTvWatchOptional } from '@/features/library/components/tv-watch-context';
 import type { WatchEntrySessionsDto } from '../types/review.schema';
 import type { EpisodeDto } from '@/features/library/types';
 
@@ -38,8 +39,11 @@ export const LogEpisodeDialog = ({
 }: LogEpisodeDialogProps) => {
   const [open, setOpen] = useState(false);
   const [state, formAction, isPending] = useActionState(logEpisodeAction, initialState);
+  const [, startServerTransition] = useTransition();
   const [rating, setRating] = useState<number | null>(null);
-  
+
+
+  const tvWatch = useTvWatchOptional();
   // Watch Sessions state
   const [sessions, setSessions] = useState<WatchEntrySessionsDto>([]);
   const [isLoadingSessions, startLoadingSessions] = useTransition();
@@ -50,9 +54,8 @@ export const LogEpisodeDialog = ({
 
   useEffect(() => {
     if (open) {
-      // Fetch sessions when dialog opens
       startLoadingSessions(async () => {
-        const result = await getWatchSessionsAction(tmdbShowId, 1); // 1 for TvShow
+        const result = await getWatchSessionsAction(tmdbShowId, 1);
         if (result.success && result.data) {
           setSessions(result.data);
           setSessionsError(null);
@@ -61,16 +64,28 @@ export const LogEpisodeDialog = ({
         }
       });
     } else {
-      // Reset state on close
       setRating(null);
     }
   }, [open, tmdbShowId]);
 
   useEffect(() => {
-    if (state.isSuccess) {
-      setOpen(false);
-    }
+    if (state.isSuccess) setOpen(false);
   }, [state.isSuccess]);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+
+    if (tvWatch) {
+      tvWatch.addOptimisticEpisode(seasonNumber, episode.episodeNumber);
+      setOpen(false);
+      setRating(null);
+    }
+
+    startServerTransition(() => {
+      formAction(formData);
+    });
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -102,7 +117,7 @@ export const LogEpisodeDialog = ({
           </DialogDescription>
         </DialogHeader>
 
-        <form action={formAction} className="space-y-6 pt-4">
+        <form onSubmit={handleSubmit} className="space-y-6 pt-4">
           <input type="hidden" name="tmdbShowId" value={tmdbShowId} />
           <input type="hidden" name="seasonNumber" value={seasonNumber} />
           <input type="hidden" name="episodeNumber" value={episode.episodeNumber} />

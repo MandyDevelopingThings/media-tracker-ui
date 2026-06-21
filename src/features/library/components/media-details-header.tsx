@@ -6,6 +6,7 @@ import { CastGrid } from './cast-grid';
 import { SeasonTabs } from './season-tabs';
 import { AddSessionDialog } from '@/features/journal/components/add-session-dialog';
 import { ToggleFavoriteButton } from './toggle-favorite-button';
+import { TvWatchProvider } from './tv-watch-context';
 import type { MediaDetailsDto } from '../types';
 import type { Dictionary } from '@/lib/i18n';
 
@@ -126,7 +127,9 @@ export const MediaDetailsHeader = ({
 
   const isMovie = media.type === 'movie';
 
-  return (
+  const watchedEpisodesInit = watchedEpisodes ?? {};
+
+  const body = (
     <article className="flex flex-col gap-6">
       {/* ── Header Card — backdrop blurred + poster medium ── */}
       <div
@@ -304,4 +307,17 @@ export const MediaDetailsHeader = ({
       </div>
     </article>
   );
+
+  if (!isMovie && media.seasons && media.seasons.length > 0) {
+    return (
+      <TvWatchProvider
+        initialWatchedEpisodes={watchedEpisodesInit}
+        seasons={media.seasons}
+      >
+        {body}
+      </TvWatchProvider>
+    );
+  }
+
+  return body;
 };

@@ -1,11 +1,12 @@
 'use client';
 
-import { useCallback, useEffect, useState, useTransition } from 'react';
+import { useCallback, useState, useTransition } from 'react';
 import { cn } from '@/lib/utils';
 import { Loader2 } from 'lucide-react';
 import { getSeasonDetailsAction } from '../actions/get-season-details';
 import { EpisodeRow } from './episode-row';
 import { LogSeasonDialog } from '@/features/journal/components/log-season-dialog';
+import { useTvWatch } from './tv-watch-context';
 import type { SeasonDto, EpisodeDto } from '../types';
 
 type SeasonTabsProps = {
@@ -60,14 +61,7 @@ export const SeasonTabs = ({
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
-  // Local copy of watched episodes for optimistic updates after season logging
-  const [localWatchedEpisodes, setLocalWatchedEpisodes] = useState<
-    Record<number, number[]>
-  >(watchedEpisodes ?? {});
-
-  useEffect(() => {
-    setLocalWatchedEpisodes(watchedEpisodes ?? {});
-  }, [watchedEpisodes]);
+  const { optimisticWatchedEpisodes, addOptimisticSeason } = useTvWatch();
 
   const handleSeasonSelect = (seasonNumber: number) => {
     setError(null);
@@ -92,14 +86,9 @@ export const SeasonTabs = ({
 
   const handleSeasonWatched = useCallback(
     (seasonNumber: number, episodeNumbers: number[]) => {
-      setLocalWatchedEpisodes((prev) => ({
-        ...prev,
-        [seasonNumber]: [
-          ...new Set([...(prev[seasonNumber] ?? []), ...episodeNumbers]),
-        ],
-      }));
+      addOptimisticSeason(seasonNumber, episodeNumbers);
     },
-    [],
+    [addOptimisticSeason],
   );
 
   const currentEpisodes = episodesMap[activeSeason] ?? [];
@@ -180,7 +169,7 @@ export const SeasonTabs = ({
           <div className="flex flex-col gap-0.5 max-h-[420px] overflow-y-auto pr-1 scrollbar-thin">
             {currentEpisodes.map((episode) => {
               const isWatched =
-                localWatchedEpisodes[activeSeason]?.includes(
+                optimisticWatchedEpisodes[activeSeason]?.includes(
                   episode.episodeNumber,
                 ) ?? false;
               return (
