@@ -9,7 +9,6 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/components/ui/sheet';
-import { LanguageSwitcher } from '@/components/language-switcher';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { SearchBar } from './search-bar';
 import { cn } from '@/lib/utils';
@@ -74,10 +73,7 @@ export const MobileMenu = ({ authenticated, currentUser, currentLocale, dict }: 
           <p className="mb-2 px-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
             Preferências
           </p>
-          <div className="flex items-center justify-between rounded-lg px-2 py-2">
-            <span className="text-sm text-foreground/80">Idioma</span>
-            <LanguageSwitcher currentLocale={currentLocale} />
-          </div>
+
           <div className="flex items-center justify-between rounded-lg px-2 py-2">
             <span className="text-sm text-foreground/80">Tema</span>
             <ThemeToggle />

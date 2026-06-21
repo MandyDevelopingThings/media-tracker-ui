@@ -4,7 +4,6 @@ import { Settings, Clapperboard } from 'lucide-react';
 import { isAuthenticated } from '@/lib/auth';
 import { getDictionary } from '@/lib/i18n';
 import { isValidLocale, DEFAULT_LOCALE } from '@/lib/i18n-config';
-import { LanguageSwitcher } from '@/components/language-switcher';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { SiteNavMenu } from './site-nav-menu';
 import { SearchBar } from './search-bar';
@@ -84,7 +83,6 @@ export const Navbar = async () => {
 
           <div className="mx-1.5 h-5 w-px bg-border" />
 
-          <LanguageSwitcher currentLocale={locale} />
           <ThemeToggle />
           <Link
             href="/settings"
