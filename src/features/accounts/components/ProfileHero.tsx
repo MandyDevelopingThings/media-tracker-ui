@@ -72,11 +72,9 @@ export const ProfileHero = ({ profile, isOwner, dict }: ProfileHeroProps) => {
                 <h1 className="text-2xl font-bold tracking-tight text-foreground drop-shadow-sm sm:text-3xl">
                   {displayName}
                 </h1>
-                {profile.displayName && (
-                  <p className="text-base font-semibold text-primary drop-shadow-sm">
-                    @{profile.username}
-                  </p>
-                )}
+                <p className="text-base font-semibold text-primary drop-shadow-sm">
+                  @{profile.username}
+                </p>
                 {profile.bio && (
                   <p className="mt-1 text-base font-medium text-foreground/90 italic line-clamp-2 drop-shadow-sm">
                     {profile.bio}
