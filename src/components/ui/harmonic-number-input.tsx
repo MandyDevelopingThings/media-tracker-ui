@@ -9,8 +9,7 @@ const HarmonicNumberInput = React.forwardRef<HTMLInputElement, React.InputHTMLAt
     if (inputRef.current) {
       if (direction === 'up') inputRef.current.stepUp();
       else inputRef.current.stepDown();
-      
-      // Trigger React onChange
+
       const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
       nativeInputValueSetter?.call(inputRef.current, inputRef.current.value);
       inputRef.current.dispatchEvent(new Event('input', { bubbles: true }));

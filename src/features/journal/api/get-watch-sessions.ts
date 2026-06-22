@@ -4,7 +4,7 @@ import type { WatchEntrySessionsDto } from '@/features/journal/types/review.sche
 
 export const getWatchSessions = async (
   tmdbId: number,
-  type: number, // 0 = Movie, 1 = TvShow
+  type: number, 
 ): Promise<ApiResponse<WatchEntrySessionsDto>> => {
   return await api.query<WatchEntrySessionsDto>(
     `/api/watchentries/sessions/${type}/${tmdbId}`,

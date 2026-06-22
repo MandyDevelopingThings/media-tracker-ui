@@ -16,7 +16,7 @@ import {
 
 type ToggleFavoriteButtonProps = {
   tmdbId: number;
-  type: number; // 0 = Movie, 1 = TvShow
+  type: number; 
   initialIsFavorite: boolean;
   dict: {
     add: string;
@@ -35,7 +35,7 @@ export const ToggleFavoriteButton = ({
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const handleToggle = () => {
-    // Optimistic update
+    
     const previousState = isFavorite;
     setIsFavorite(!previousState);
 
@@ -43,10 +43,9 @@ export const ToggleFavoriteButton = ({
       const result = await toggleFavoriteAction(tmdbId, type);
       
       if (!result.success) {
-        // Revert on error
-        setIsFavorite(previousState);
         
-        // Extract error message
+        setIsFavorite(previousState);
+
         let msg = "Não foi possível atualizar os favoritos.";
         if (typeof result.error === 'string') {
           msg = result.error;

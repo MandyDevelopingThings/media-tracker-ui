@@ -42,14 +42,12 @@ export const LogEpisodeDialog = ({
   const [, startServerTransition] = useTransition();
   const [rating, setRating] = useState<number | null>(null);
 
-
   const tvWatch = useTvWatchOptional();
-  // Watch Sessions state
+  
   const [sessions, setSessions] = useState<WatchEntrySessionsDto>([]);
   const [isLoadingSessions, startLoadingSessions] = useTransition();
   const [sessionsError, setSessionsError] = useState<string | null>(null);
 
-  // Date formatted for input type="date" (YYYY-MM-DD)
   const todayStr = new Date().toISOString().split('T')[0];
 
   useEffect(() => {
@@ -123,14 +121,12 @@ export const LogEpisodeDialog = ({
           <input type="hidden" name="episodeNumber" value={episode.episodeNumber} />
           <input type="hidden" name="rating" value={rating ?? ''} />
 
-          {/* Form Status */}
           {state.message && !state.isSuccess && (
             <div className="p-3 rounded-lg text-sm font-medium bg-destructive/10 text-destructive border border-destructive/20">
               {state.message}
             </div>
           )}
 
-          {/* Watch Session Select */}
           <div className="space-y-2">
             <Label htmlFor="watchSessionId" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
               Sessão de Exibição
@@ -166,7 +162,6 @@ export const LogEpisodeDialog = ({
             {state.errors?.watchSessionId && <span className="text-destructive text-xs">{state.errors.watchSessionId[0]}</span>}
           </div>
 
-          {/* Date */}
           <div className="space-y-2">
             <Label htmlFor="watchedAt" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
               Data
@@ -182,7 +177,6 @@ export const LogEpisodeDialog = ({
             {state.errors?.watchedAt && <span className="text-destructive text-xs">{state.errors.watchedAt[0]}</span>}
           </div>
 
-          {/* Rating */}
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <Label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">

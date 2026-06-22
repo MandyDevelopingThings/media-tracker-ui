@@ -6,7 +6,7 @@ import { deleteEpisodeEntry as deleteEpisodeEntryApi } from '../api/delete-episo
 
 const deleteEpisodeEntrySchema = z.object({
   entryId: z.string().uuid(),
-  tmdbShowId: z.number(), // Used for revalidation
+  tmdbShowId: z.number(), 
 });
 
 export const deleteEpisodeEntryAction = async (prevState: unknown, formData: FormData) => {

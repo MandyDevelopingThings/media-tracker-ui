@@ -4,12 +4,10 @@ const Skeleton = ({ className }: { className?: string }) => (
   <div className={cn('animate-pulse rounded bg-muted/60', className)} />
 );
 
-
 export default function MovieLoading() {
   return (
     <div className="min-h-screen bg-background">
       <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
-        {/* Header card skeleton */}
         <div className="rounded-2xl border border-border/40 bg-card overflow-hidden" style={{ minHeight: '280px' }}>
           <div className="flex gap-6 p-6 sm:gap-8 sm:p-8">
             <Skeleton className="w-28 sm:w-44 aspect-[2/3] rounded-xl shrink-0" />
@@ -26,7 +24,6 @@ export default function MovieLoading() {
           </div>
         </div>
 
-        {/* Body skeleton */}
         <div className="grid grid-cols-1 gap-6 mt-6 lg:grid-cols-2">
           <div className="flex flex-col gap-4">
             <Skeleton className="h-4 w-24 rounded" />

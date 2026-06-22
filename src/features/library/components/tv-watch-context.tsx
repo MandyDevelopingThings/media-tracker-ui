@@ -74,11 +74,6 @@ const reducer = (state: WatchedEpisodesMap, action: TvWatchAction): WatchedEpiso
   return state;
 };
 
-/**
- * Computes a WatchedEpisodesMap for a session based on its stop point or
- * completion. If `finishedAt` is set, all episodes of all seasons are marked.
- * If a stop point is set, all episodes up to and including that point are marked.
- */
 const computeSessionEpisodesMap = (
   seasons: readonly SeasonDto[],
   params: {

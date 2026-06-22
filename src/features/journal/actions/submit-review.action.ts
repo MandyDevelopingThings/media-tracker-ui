@@ -15,7 +15,7 @@ export const submitReviewAction = async (
   prevState: SubmitReviewState,
   formData: FormData
 ): Promise<SubmitReviewState> => {
-  // Extract and parse fields
+  
   const data = {
     tmdbId: parseInt(formData.get('tmdbId') as string, 10),
     type: parseInt(formData.get('type') as string, 10),
@@ -26,7 +26,6 @@ export const submitReviewAction = async (
     syncGlobalRating: formData.get('syncGlobalRating') === 'on',
   };
 
-  // Validate with Zod
   const validation = addReviewSchema.safeParse(data);
 
   if (!validation.success) {
@@ -38,7 +37,6 @@ export const submitReviewAction = async (
     };
   }
 
-  // API Call
   const response = await api.command('/api/reviews', validation.data, {
     method: 'POST',
   });
@@ -52,8 +50,6 @@ export const submitReviewAction = async (
     };
   }
 
-  // Revalidate the media path so the new review appears
-  // type: 0 = Movie, 1 = TvShow
   const mediaPath = validation.data.type === 0 ? `/movie/${validation.data.tmdbId}` : `/tv/${validation.data.tmdbId}`;
   revalidatePath(mediaPath);
 

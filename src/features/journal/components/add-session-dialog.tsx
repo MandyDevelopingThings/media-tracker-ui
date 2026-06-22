@@ -133,20 +133,17 @@ export const AddSessionDialog = ({
         <form onSubmit={handleSubmit} className="space-y-5 pt-2">
           <input type="hidden" name="tmdbId" value={tmdbId} />
 
-          {/* Auto-add hint */}
           <div className="flex gap-2.5 rounded-lg border border-primary/20 bg-primary/5 px-3.5 py-3 text-xs text-primary/80">
             <Info className="mt-0.5 h-3.5 w-3.5 shrink-0" />
             <span>{dict.autoAddHint}</span>
           </div>
 
-          {/* Form error */}
           {state.message && !state.isSuccess && (
             <div className="rounded-lg border border-destructive/20 bg-destructive/10 p-3 text-sm font-medium text-destructive">
               {state.message}
             </div>
           )}
 
-          {/* startedAt */}
           <div className="space-y-2">
             <Label
               htmlFor={`add-session-startedAt-${tmdbId}`}
@@ -168,7 +165,6 @@ export const AddSessionDialog = ({
             )}
           </div>
 
-          {/* finishedAt */}
           <div className="space-y-2">
             <Label
               htmlFor={`add-session-finishedAt-${tmdbId}`}
@@ -193,7 +189,6 @@ export const AddSessionDialog = ({
             )}
           </div>
 
-          {/* stoppedAt — TV only */}
           {mediaType === 'tv' && (
             <div className="space-y-4">
               <div className="flex gap-2.5 rounded-lg border border-primary/20 bg-primary/5 px-3.5 py-3 text-xs text-primary/80">

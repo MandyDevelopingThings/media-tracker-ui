@@ -98,7 +98,6 @@ export const SeasonTabs = ({
 
   return (
     <div className="flex flex-col gap-3">
-      {/* Season pills */}
       <div
         role="tablist"
         aria-label={dict.seasons}
@@ -148,7 +147,6 @@ export const SeasonTabs = ({
         })}
       </div>
 
-      {/* Episode list panel */}
       <div
         role="tabpanel"
         id={`season-panel-${activeSeason}`}

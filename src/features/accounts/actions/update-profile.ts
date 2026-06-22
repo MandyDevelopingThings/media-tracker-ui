@@ -56,10 +56,8 @@ export const updateProfileAction = async (
     };
   }
 
-  // We don't have the userId or username here easily, but we can revalidate the current page
-  // and try to invalidate tags if we can, or just revalidate the layout path.
   revalidatePath('/settings/profile');
-  revalidatePath('/profile/[username]', 'layout'); // Invalidate profile pages
+  revalidatePath('/profile/[username]', 'layout'); 
   
   return {
     success: true,

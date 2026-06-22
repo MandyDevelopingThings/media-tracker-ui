@@ -50,14 +50,12 @@ export const WatchEntryListShell = ({
 
   return (
     <div className="flex flex-col gap-6">
-      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
         <div className="flex items-baseline gap-2 mr-auto">
           <h2 className="text-xl font-bold tracking-tight">{dict.title}</h2>
           <span className="text-sm text-muted-foreground">{totalLabel}</span>
         </div>
 
-        {/* Search */}
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground pointer-events-none" />
           <input
@@ -69,7 +67,6 @@ export const WatchEntryListShell = ({
           />
         </div>
 
-        {/* Layout toggle */}
         <div
           className="flex items-center gap-1 rounded-md border border-border p-0.5 bg-card"
           role="group"
@@ -104,14 +101,12 @@ export const WatchEntryListShell = ({
         </div>
       </div>
 
-      {/* Empty state (global) */}
       {filtered.length === 0 && searchQuery.trim() && (
         <div className="flex items-center justify-center py-16 border border-dashed border-border/40 rounded-xl">
           <p className="text-sm text-muted-foreground">{dict.emptyState}</p>
         </div>
       )}
 
-      {/* Layout views */}
       {layout === 'grid' ? (
         <WatchEntryGridView items={filtered} dict={dict.grid} />
       ) : (

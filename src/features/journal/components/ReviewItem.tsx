@@ -17,7 +17,7 @@ type ReviewItemProps = {
   currentUserId?: string | null;
 };
 
-const TRUNCATE_LENGTH = 1000; // Approx 30 lines
+const TRUNCATE_LENGTH = 1000; 
 
 export const ReviewItem = ({ review, dict, currentUserId }: ReviewItemProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -55,7 +55,6 @@ export const ReviewItem = ({ review, dict, currentUserId }: ReviewItemProps) => 
     <>
       <div className="group relative w-full bg-card hover:bg-muted/30 transition-all duration-300 border border-border/40 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/20 p-4 md:p-6 mb-4 rounded-xl">
         <div className="flex flex-col space-y-3">
-          {/* Header Stream */}
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 rounded-full bg-muted border border-border/40 flex items-center justify-center overflow-hidden flex-shrink-0">
@@ -78,14 +77,12 @@ export const ReviewItem = ({ review, dict, currentUserId }: ReviewItemProps) => 
             </div>
           </div>
 
-          {/* Subject Line / Title */}
           {review.title && (
             <h3 className="text-lg font-semibold text-foreground tracking-tight mt-1">
               {review.title}
             </h3>
           )}
 
-          {/* Content */}
           <div className={cn("mt-2", !review.title && "mt-1")}>
             {review.containsSpoilers ? (
               <SpoilerOverlay revealText={dict.revealSpoiler}>{contentNode}</SpoilerOverlay>
@@ -115,7 +112,6 @@ export const ReviewItem = ({ review, dict, currentUserId }: ReviewItemProps) => 
         )}
       </div>
 
-      {/* Edit Dialog */}
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
         <DialogContent className="max-w-2xl w-full bg-card border-border/50">
           <DialogHeader>
@@ -129,7 +125,6 @@ export const ReviewItem = ({ review, dict, currentUserId }: ReviewItemProps) => 
         </DialogContent>
       </Dialog>
 
-      {/* Delete Confirmation Alert */}
       <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
         <AlertDialogContent className="bg-card border-border/50">
           <AlertDialogHeader>

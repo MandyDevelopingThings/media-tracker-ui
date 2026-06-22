@@ -7,14 +7,13 @@ export const logEpisodeSchema = z.object({
   episodeNumber: z.number().int().positive(),
   watchedAt: z.string().optional()
     .refine((val) => {
-      if (!val) return true; // Optional
+      if (!val) return true; 
       const date = new Date(val);
-      if (isNaN(date.getTime())) return false; // Invalid date
+      if (isNaN(date.getTime())) return false; 
       
       const today = new Date();
       today.setHours(23, 59, 59, 999);
-      
-      // WatchedAt <= Today
+
       return date.getTime() <= today.getTime();
     }, { message: 'A data da exibição não pode estar no futuro.' }),
   rating: z.number().min(1).max(10).optional(),

@@ -35,7 +35,6 @@ const SidebarSkeleton = () => (
 export default function ProfileListLoading() {
   return (
     <div className="flex flex-col gap-6">
-      {/* Header skeleton */}
       <div className="flex items-center gap-4">
         <div className="h-6 w-24 bg-muted rounded animate-pulse" />
         <div className="h-4 w-20 bg-muted rounded animate-pulse" />
@@ -45,7 +44,6 @@ export default function ProfileListLoading() {
         </div>
       </div>
 
-      {/* Content skeleton */}
       <div className="flex flex-col lg:flex-row gap-6">
         <SidebarSkeleton />
         <div className="flex-1 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-6 gap-2.5">

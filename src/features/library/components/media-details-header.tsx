@@ -131,7 +131,6 @@ export const MediaDetailsHeader = ({
 
   const body = (
     <article className="flex flex-col gap-6">
-      {/* ── Header Card — backdrop blurred + poster medium ── */}
       <div
         className={cn(
           'relative w-full overflow-hidden rounded-2xl',
@@ -139,7 +138,6 @@ export const MediaDetailsHeader = ({
         )}
         style={{ minHeight: '280px' }}
       >
-        {/* Blurred backdrop */}
         <div className="absolute inset-0 overflow-hidden rounded-2xl">
           <MediaBackdrop
             backdropPath={media.backdropPath}
@@ -149,9 +147,7 @@ export const MediaDetailsHeader = ({
           <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/80 to-background/95" />
         </div>
 
-        {/* Content over backdrop */}
         <div className="relative z-10 flex gap-6 p-6 sm:gap-8 sm:p-8">
-          {/* Poster */}
           <div className="w-28 shrink-0 sm:w-44">
             <PosterCard
               posterPath={media.posterPath}
@@ -160,9 +156,7 @@ export const MediaDetailsHeader = ({
             />
           </div>
 
-          {/* Metadata */}
           <div className="flex flex-col justify-end gap-3 min-w-0 py-2">
-            {/* Type badge */}
             <div className="flex items-center gap-2">
               {isMovie ? (
                 <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-primary/80">
@@ -186,7 +180,6 @@ export const MediaDetailsHeader = ({
               {media.title}
             </h1>
 
-            {/* Meta row */}
             <div className="flex flex-wrap items-center gap-3">
               {releaseYear && (
                 <MetaItem
@@ -213,7 +206,6 @@ export const MediaDetailsHeader = ({
               )}
             </div>
 
-            {/* Genres + Add Session button row */}
             <div className="flex flex-wrap items-center justify-between gap-3">
               {media.genres.length > 0 && (
                 <div className="flex flex-wrap gap-1.5">
@@ -244,19 +236,16 @@ export const MediaDetailsHeader = ({
         </div>
       </div>
 
-      {/* ── Body — two column layout ── */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        {/* Left column */}
         <div className="flex flex-col gap-6">
           {isMovie ? (
-            /* Movie: cast on the left */
+            
             <SectionCard>
               <SectionHeading>{dict.cast}</SectionHeading>
               <CastGrid cast={media.topCast} label={dict.cast} />
             </SectionCard>
           ) : (
             <>
-              {/* TV: overview card */}
               <SectionCard>
                 <SectionHeading>{dict.overview}</SectionHeading>
                 <p className="text-sm text-foreground/80 leading-relaxed">
@@ -264,7 +253,6 @@ export const MediaDetailsHeader = ({
                 </p>
               </SectionCard>
 
-              {/* TV: cast card below overview */}
               {media.topCast.length > 0 && (
                 <SectionCard>
                   <SectionHeading>{dict.cast}</SectionHeading>
@@ -275,10 +263,9 @@ export const MediaDetailsHeader = ({
           )}
         </div>
 
-        {/* Right column */}
         <div className="flex flex-col gap-6">
           {isMovie ? (
-            /* Movie: overview card on the right */
+            
             <SectionCard>
               <SectionHeading>{dict.overview}</SectionHeading>
               <p className="text-sm text-foreground/80 leading-relaxed">
@@ -286,7 +273,7 @@ export const MediaDetailsHeader = ({
               </p>
             </SectionCard>
           ) : (
-            /* TV: seasons & episodes card */
+            
             media.seasons && media.seasons.length > 0 && (
               <SectionCard>
                 <SectionHeading>

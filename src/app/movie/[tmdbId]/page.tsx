@@ -62,7 +62,7 @@ export default async function MoviePage({ params, searchParams }: MoviePageProps
   let isFavorite = false;
   if (authenticated) {
     const { getWatchEntry } = await import('@/features/journal/api/get-watch-entry');
-    const watchEntryRes = await getWatchEntry(parsed.data, 0); // 0 = Movie
+    const watchEntryRes = await getWatchEntry(parsed.data, 0); 
     if (watchEntryRes.success && watchEntryRes.data) {
       isFavorite = watchEntryRes.data.isFavorite ?? false;
     }

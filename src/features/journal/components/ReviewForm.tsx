@@ -33,7 +33,6 @@ export const ReviewForm = ({ tmdbId, type, dict }: ReviewFormProps) => {
 
   return (
     <div className="rounded-xl border border-border/40 bg-card p-5 shadow-sm relative overflow-hidden">
-      {/* Subtle neon glow from top */}
       <div className="absolute top-0 left-1/4 right-1/4 h-[1px] bg-gradient-to-r from-transparent via-primary/50 to-transparent shadow-sm shadow-primary/50"></div>
 
       <form ref={formRef} action={formAction} className="flex flex-col space-y-6">
@@ -41,7 +40,6 @@ export const ReviewForm = ({ tmdbId, type, dict }: ReviewFormProps) => {
         <input type="hidden" name="type" value={type} />
         <input type="hidden" name="rating" value={rating ?? ''} />
 
-        {/* Form header/Status */}
         {state.message && (
           <div className={cn(
             "p-3 rounded-lg text-sm font-medium",
@@ -51,7 +49,6 @@ export const ReviewForm = ({ tmdbId, type, dict }: ReviewFormProps) => {
           </div>
         )}
 
-        {/* Title */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
@@ -67,7 +64,6 @@ export const ReviewForm = ({ tmdbId, type, dict }: ReviewFormProps) => {
           </div>
         </div>
 
-        {/* Content */}
         <div className="flex flex-col gap-1.5">
           <Label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
             {(dict as any).contentLabel || 'CONTEÚDO'} <span className="text-destructive ml-0.5">*</span>
@@ -81,13 +77,10 @@ export const ReviewForm = ({ tmdbId, type, dict }: ReviewFormProps) => {
           {state.errors?.content && <span className="text-red-400 text-xs">{state.errors.content[0]}</span>}
         </div>
 
-        {/* Actions Row (Unified Toolbar) */}
         <div className="flex flex-col lg:flex-row items-center justify-between gap-6 pt-3 border-t border-border/40 mt-2">
           
-          {/* Toolbar Container */}
           <div className="flex flex-col md:flex-row items-center w-full lg:w-auto bg-muted/30 border border-border/40 rounded-xl p-4 md:py-2 md:px-6">
             
-            {/* Rating Section */}
             <div className="flex items-center justify-between md:justify-start space-x-4 w-full md:w-auto border-b md:border-b-0 md:border-r border-border/40 pb-4 md:pb-0 md:pr-10 shrink-0">
               <span className="text-sm font-medium text-foreground/80 shrink-0">{dict.ratingLabel}</span>
               <div className="flex items-center space-x-3 w-full md:w-[180px]">
@@ -128,7 +121,6 @@ export const ReviewForm = ({ tmdbId, type, dict }: ReviewFormProps) => {
               </div>
             </div>
 
-            {/* Toggles Section */}
             <div className="flex items-center justify-around md:justify-start space-x-8 w-full md:w-auto pt-4 md:pt-0 md:pl-10">
               <div className="flex items-center space-x-2">
                 <Switch id="contains-spoilers" name="containsSpoilers" />
@@ -142,7 +134,6 @@ export const ReviewForm = ({ tmdbId, type, dict }: ReviewFormProps) => {
             </div>
           </div>
 
-          {/* Submit button */}
           <button 
             type="submit" 
             disabled={isPending}

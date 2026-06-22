@@ -6,7 +6,7 @@ import { api } from '@/lib/api-client';
 
 const toggleFavoriteSchema = z.object({
   tmdbId: z.number().int().positive(),
-  type: z.number().int(), // 0 = Movie, 1 = TvShow
+  type: z.number().int(), 
 });
 
 export const toggleFavoriteAction = async (tmdbId: number, type: number) => {

@@ -29,7 +29,6 @@ export const MobileSearch = ({ placeholder, searchLabel }: MobileSearchProps) =>
     router.push(`/search?q=${encodeURIComponent(q)}`);
   };
 
-
   const iconButtonClass = cn(
     'flex h-9 w-9 items-center justify-center rounded-lg',
     'border border-primary/20 bg-primary/5',

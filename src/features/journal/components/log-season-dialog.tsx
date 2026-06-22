@@ -108,20 +108,17 @@ export const LogSeasonDialog = ({
           <input type="hidden" name="tmdbShowId" value={tmdbShowId} />
           <input type="hidden" name="seasonNumber" value={seasonNumber} />
 
-          {/* Info hint */}
           <div className="flex gap-2.5 rounded-lg border border-primary/20 bg-primary/5 px-3.5 py-3 text-xs text-primary/80">
             <Info className="mt-0.5 h-3.5 w-3.5 shrink-0" />
             <span>{dict.logSeasonHint}</span>
           </div>
 
-          {/* Form error */}
           {state.message && !state.isSuccess && (
             <div className="rounded-lg border border-destructive/20 bg-destructive/10 p-3 text-sm font-medium text-destructive">
               {state.message}
             </div>
           )}
 
-          {/* Watch Session Select */}
           <div className="space-y-2">
             <Label
               htmlFor="watchSessionId-season"
@@ -164,7 +161,6 @@ export const LogSeasonDialog = ({
             )}
           </div>
 
-          {/* Date */}
           <div className="space-y-2">
             <Label
               htmlFor="watchedAt-season"

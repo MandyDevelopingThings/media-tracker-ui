@@ -11,7 +11,7 @@ type SearchReviewsParams = {
   minRating?: number;
   maxRating?: number;
   hasSpoilers?: boolean;
-  orderBy?: string; // 'Date' or 'Rating'
+  orderBy?: string; 
   isAscendingOrder?: boolean;
 };
 

@@ -48,7 +48,6 @@ export const WatchEntryPosterCard = ({ item, dict }: WatchEntryPosterCardProps) 
         </div>
       )}
 
-      {/* Status dot — top left */}
       <span
         className={cn(
           'absolute top-2 left-2 w-2.5 h-2.5 rounded-full ring-2 ring-background shadow-sm',
@@ -57,7 +56,6 @@ export const WatchEntryPosterCard = ({ item, dict }: WatchEntryPosterCardProps) 
         aria-hidden
       />
 
-      {/* Favorite icon — top right */}
       {item.isFavorite && (
         <span className="absolute top-2 right-2">
           <Heart
@@ -67,7 +65,6 @@ export const WatchEntryPosterCard = ({ item, dict }: WatchEntryPosterCardProps) 
         </span>
       )}
 
-      {/* Bottom info strip — always visible */}
       <div className="absolute bottom-0 left-0 right-0 flex items-center justify-between px-2 py-1.5 backdrop-blur-sm bg-black/65 z-10">
         <InlineRatingEditor
           tmdbId={item.tmdbId}
@@ -87,7 +84,6 @@ export const WatchEntryPosterCard = ({ item, dict }: WatchEntryPosterCardProps) 
         )}
       </div>
 
-      {/* Hover overlay with title */}
       <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/30 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
       <div className="absolute bottom-8 left-0 right-0 px-2 pb-1 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
         <p className="line-clamp-2 text-xs font-semibold text-foreground leading-tight drop-shadow-sm">

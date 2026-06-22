@@ -64,7 +64,7 @@ export default async function TvPage({ params, searchParams }: TvPageProps) {
   let isFavorite = false;
   if (authenticated) {
     const { getWatchEntry } = await import('@/features/journal/api/get-watch-entry');
-    const watchEntryRes = await getWatchEntry(parsed.data, 1); // 1 = TvShow
+    const watchEntryRes = await getWatchEntry(parsed.data, 1); 
     if (watchEntryRes.success && watchEntryRes.data) {
       if (watchEntryRes.data.watchedEpisodes) {
         watchedEpisodes = watchEntryRes.data.watchedEpisodes;

@@ -43,7 +43,6 @@ export default async function SettingsLayout({
       </aside>
 
       <main className="flex w-full flex-col overflow-hidden py-6 lg:py-8">
-        {/* Mobile Nav */}
         <div className="mb-6 md:hidden">
           <h2 className="mb-4 text-2xl font-bold tracking-tight">
             {dict.settings.title}

@@ -69,7 +69,6 @@ export const ReviewList = ({ reviews, totalPages, currentPage, dict, currentUser
 
   return (
     <div className={cn("flex flex-col space-y-4 transition-opacity duration-300", isPending && "opacity-50 pointer-events-none")}>
-      {/* Sorting Controls */}
       <div className="flex justify-end mb-2">
         <div className="flex items-center space-x-2">
           <span className="text-xs text-white/50">{dict.sort.label}</span>
@@ -92,7 +91,6 @@ export const ReviewList = ({ reviews, totalPages, currentPage, dict, currentUser
         ))}
       </div>
       
-      {/* Interactive Pagination */}
       {totalPages > 1 && (
         <div className="flex items-center justify-center pt-8 space-x-4">
           <button 

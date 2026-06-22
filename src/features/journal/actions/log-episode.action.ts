@@ -45,7 +45,6 @@ export const logEpisodeAction = async (
     };
   }
 
-  // Revalidate to update episodes or watch entries status
   revalidatePath(`/tv/${validatedFields.data.tmdbShowId}`);
 
   return {

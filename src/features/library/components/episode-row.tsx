@@ -30,9 +30,8 @@ export const EpisodeRow = ({
 }: EpisodeRowProps) => {
   const [isEntriesDialogOpen, setIsEntriesDialogOpen] = useState(false);
 
-  // Stop propagation when clicking buttons inside the row
   const handleContainerClick = (e: React.MouseEvent) => {
-    // Only open dialog if user is authenticated and clicks on the row itself
+    
     if (isAuthenticated) {
       setIsEntriesDialogOpen(true);
     }

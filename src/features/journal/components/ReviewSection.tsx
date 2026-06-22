@@ -9,7 +9,7 @@ import { ReviewList } from './ReviewList';
 
 type ReviewSectionProps = {
   tmdbId: number;
-  type: number; // 0 for Movie, 1 for TvShow
+  type: number; 
   searchParams?: {
     page?: string;
     minRating?: string;
@@ -26,11 +26,9 @@ export const ReviewSection = async ({ tmdbId, type, searchParams }: ReviewSectio
   const fullDict = await getDictionary('journal', locale);
   const dict = fullDict.reviews;
 
-  // Fetch current user id to determine ownership of reviews
   const userRes = await getCurrentUser();
   const currentUserId = userRes.success ? userRes.data.id : null;
 
-  // Fetch reviews based on searchParams
   const page = searchParams?.page ? parseInt(searchParams.page, 10) : 1;
   const minRating = searchParams?.minRating ? parseInt(searchParams.minRating, 10) : undefined;
   const maxRating = searchParams?.maxRating ? parseInt(searchParams.maxRating, 10) : undefined;

@@ -21,7 +21,6 @@ const initialState: EditReviewState = {
 export const EditReviewForm = ({ review, dict, onSuccess }: EditReviewFormProps) => {
   const action = editReviewAction.bind(null, review.id, review.tmdbId, review.type);
 
-  // @ts-ignore - sharing state type between actions is safe here
   const [state, formAction, isPending] = useActionState(action, initialState);
   const [rating, setRating] = useState<number | null>(review.rating ?? null);
 
@@ -35,14 +34,12 @@ export const EditReviewForm = ({ review, dict, onSuccess }: EditReviewFormProps)
       <input type="hidden" name="type" value={review.type} />
       <input type="hidden" name="rating" value={rating ?? ''} />
 
-      {/* Server error */}
       {state.errors?.server && (
         <div className="px-4 py-3 rounded-lg text-sm font-medium bg-red-500/10 text-red-400 border border-red-500/20">
           {state.errors.server[0]}
         </div>
       )}
 
-      {/* Title */}
       <div className="flex flex-col gap-1.5">
         <Label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
           {(dict as any).titleLabel || 'TÍTULO'} <span className="font-normal normal-case lowercase ml-1 opacity-70">({(dict as any).optional || 'opcional'})</span>
@@ -57,7 +54,6 @@ export const EditReviewForm = ({ review, dict, onSuccess }: EditReviewFormProps)
         {state.errors?.title && <span className="text-red-400 text-xs">{state.errors.title[0]}</span>}
       </div>
 
-      {/* Content */}
       <div className="flex flex-col gap-1.5">
         <Label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
           {(dict as any).contentLabel || 'CONTEÚDO'} <span className="text-destructive ml-0.5">*</span>
@@ -72,7 +68,6 @@ export const EditReviewForm = ({ review, dict, onSuccess }: EditReviewFormProps)
         {state.errors?.content && <span className="text-red-400 text-xs">{state.errors.content[0]}</span>}
       </div>
 
-      {/* Rating */}
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between">
           <Label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5">
@@ -103,9 +98,7 @@ export const EditReviewForm = ({ review, dict, onSuccess }: EditReviewFormProps)
         </div>
       </div>
 
-      {/* Footer: Toggles (left) + Submit (right) */}
       <div className="flex items-center justify-between gap-4 pt-2 border-t border-border/40 mt-1">
-        {/* Toggles grouped */}
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-2">
             <Switch
@@ -128,7 +121,6 @@ export const EditReviewForm = ({ review, dict, onSuccess }: EditReviewFormProps)
           </div>
         </div>
 
-        {/* Submit CTA */}
         <button
           type="submit"
           disabled={isPending}

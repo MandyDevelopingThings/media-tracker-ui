@@ -20,8 +20,7 @@ export const WatchEntryItem = ({ entry, dict, onDeleted }: WatchEntryItemProps) 
   const [isPendingDelete, startDeleteTransition] = useTransition();
 
   const [rateState, rateFormAction, isPendingRate] = useActionState(rateEpisodeAction, null);
-  
-  // Keep the rating completely local since we don't refetch the list
+
   const initialStr = entry.rating?.toString() ?? '';
   const [localRating, setLocalRating] = useState<string>(initialStr);
   const [savedRating, setSavedRating] = useState<string>(initialStr);
@@ -31,7 +30,7 @@ export const WatchEntryItem = ({ entry, dict, onDeleted }: WatchEntryItemProps) 
       toast.success(dict.rateSuccess);
     } else if (rateState?.error) {
       toast.error(rateState.error);
-      // If error, revert to the initially saved rating
+      
       setLocalRating(savedRating);
     }
   }, [rateState, dict.rateSuccess, savedRating]);
@@ -48,7 +47,6 @@ export const WatchEntryItem = ({ entry, dict, onDeleted }: WatchEntryItemProps) 
     
     if (newRatingStr === savedRating) return;
 
-    // Optimistically set it in local state
     setLocalRating(newRatingStr);
     setSavedRating(newRatingStr);
 

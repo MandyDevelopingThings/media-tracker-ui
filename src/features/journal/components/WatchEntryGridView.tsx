@@ -96,12 +96,10 @@ export const WatchEntryGridView = ({ items, dict }: WatchEntryGridViewProps) => 
 
   return (
     <div className="flex flex-col lg:flex-row gap-6">
-      {/* Sidebar */}
       <aside className="w-full lg:w-60 lg:shrink-0 lg:sticky lg:top-20 h-fit">
         <div className="bg-card border border-border/40 rounded-xl p-4 shadow-sm flex flex-col gap-5">
           <h3 className="font-semibold text-sm tracking-tight">{dict.filters.title}</h3>
 
-          {/* Status pills */}
           <div>
             <p className="text-[11px] text-muted-foreground mb-2">{dict.filters.status}</p>
             <div className="flex flex-wrap gap-1.5">
@@ -122,7 +120,6 @@ export const WatchEntryGridView = ({ items, dict }: WatchEntryGridViewProps) => 
             </div>
           </div>
 
-          {/* Type */}
           <div>
             <p className="text-[11px] text-muted-foreground mb-2">{dict.filters.type}</p>
             <div className="flex gap-1.5">
@@ -147,7 +144,6 @@ export const WatchEntryGridView = ({ items, dict }: WatchEntryGridViewProps) => 
             </div>
           </div>
 
-          {/* OrderBy */}
           <div>
             <label className="text-[11px] text-muted-foreground block">{dict.filters.orderBy}</label>
             <select
@@ -161,7 +157,6 @@ export const WatchEntryGridView = ({ items, dict }: WatchEntryGridViewProps) => 
             </select>
           </div>
 
-          {/* Ascending toggle */}
           <div className="flex gap-1.5">
             {[
               { value: false, label: '↓ Desc' },
@@ -191,7 +186,6 @@ export const WatchEntryGridView = ({ items, dict }: WatchEntryGridViewProps) => 
         </div>
       </aside>
 
-      {/* Grid */}
       <div className={cn('flex-1 min-w-0 transition-opacity duration-200', isPending && 'opacity-50')}>
         {filtered.length === 0 ? (
           <div className="flex items-center justify-center py-20 border border-dashed border-border/40 rounded-xl">

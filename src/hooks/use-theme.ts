@@ -24,10 +24,10 @@ const applyTheme = (resolved: ResolvedTheme): void => {
 
 const setStoredTheme = (resolved: ResolvedTheme): void => {
   try {
-    const maxAge = 60 * 60 * 24 * 365; // 1 year
+    const maxAge = 60 * 60 * 24 * 365; 
     document.cookie = `${THEME_STORAGE_KEY}=${resolved}; path=/; max-age=${maxAge}; samesite=lax`;
   } catch {
-    // ignore write errors
+    
   }
 };
 
@@ -43,7 +43,7 @@ const readStoredTheme = (): ResolvedTheme | null => {
       }
     }
   } catch {
-    // document.cookie not available
+    
   }
   return null;
 };

@@ -120,7 +120,7 @@ export function ProfileForm({ profile, dict, apiBaseUrl }: ProfileFormProps) {
               </div>
             </div>
           </div>
-          <div className="h-6" /> {/* spacer for avatar overflow */}
+          <div className="h-6" /> {}
         </div>
 
         <div className="space-y-2">

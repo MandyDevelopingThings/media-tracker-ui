@@ -14,7 +14,6 @@ export const HeroSection = ({ media, dict }: HeroSectionProps) => {
   const isMovie = media.type === "Movie";
   const href = isMovie ? `/movie/${media.tmdbId}` : `/tv/${media.tmdbId}`;
 
-  // Se não houver backdrop, fallback para o poster ou gradiente puro
   const backgroundUrl = media.backdropPath
     ? `https://image.tmdb.org/t/p/original${media.backdropPath}`
     : media.posterPath
