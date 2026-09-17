@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MediaTracker UI
 
-## Getting Started
+Interface web do **MediaTracker**, uma aplicação para catálogo, rastreamento e diário de consumo de filmes e séries, integrada à API do MediaTracker e aos dados do The Movie Database (TMDB).
 
-First, run the development server:
+---
+
+## Funcionalidades
+
+- **Exploração e Catálogo**: Visualização de destaques, mídias mais bem avaliadas e busca detalhada de filmes e séries.
+- **Diário de Visualização (Journal)**: Registro e controle de filmes assistidos e progresso de episódios por temporadas.
+- **Autenticação e Perfil**: Login, cadastro, redefinição de senha e gerenciamento de perfil.
+- **Internacionalização (i18n)**: Suporte nativo a Português (pt-BR) e Inglês (en-US) com detecção automática e via cookies.
+
+---
+
+## Tecnologias
+
+- [Next.js](https://nextjs.org/) (App Router, Server Actions e Turbopack)
+- [React](https://react.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Zod](https://zod.dev/)
+
+---
+
+## Como Executar o Projeto
+
+### Pré-requisitos
+
+- [Node.js](https://nodejs.org/) (versão 20 ou superior recomendada)
+- [pnpm](https://pnpm.io/) (recomendado) ou npm/yarn
+- [MediaTracker API](https://github.com/MandyDevelopingThings/media-tracker-api) em execução
+
+---
+
+### Passo a Passo
+
+#### 1. Clonar o repositório
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone git@github.com:MandyDevelopingThings/media-tracker-ui.git
+cd media-tracker-ui
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### 2. Instalar as dependências
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+#### 3. Configurar as variáveis de ambiente
 
-## Learn More
+Crie um arquivo `.env.local` na raiz do projeto (ou duplique a partir do `.env.example`):
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+cp .env.example .env.local
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Conteúdo padrão do `.env.local`:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```env
+API_BASE_URL="http://localhost:5004"
+```
 
-## Deploy on Vercel
+> **Nota**: Caso o backend esteja rodando em outro host ou porta, atualize o valor de `API_BASE_URL`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+#### 4. Iniciar o servidor de desenvolvimento
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+pnpm dev
+```
+
+A aplicação estará disponível em [http://localhost:3000](http://localhost:3000).
+
+#### Executar em modo de produção
+
+Para validar o comportamento real do projeto:
+
+```bash
+pnpm build
+pnpm start
+```
+
+---
+
+## Scripts Disponíveis
+
+| Comando | Descrição |
+| :--- | :--- |
+| `pnpm dev` | Inicia o servidor local de desenvolvimento com Turbopack |
+| `pnpm build` | Gera a versão otimizada de produção da aplicação |
+| `pnpm start` | Inicia a aplicação utilizando a compilação gerada pelo build |
+| `pnpm lint` | Executa a análise estática do código-fonte com o ESLint |
